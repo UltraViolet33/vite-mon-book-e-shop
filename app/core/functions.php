@@ -22,7 +22,7 @@ function checkError()
         $msgError .= '<div class="bg-danger p-3">
                             <span style="font-size:24px" >' . $_SESSION['error'] . '</span>
                     </div>';
-        unset($_SESSION['error']);
     }
+    unset($_SESSION['error']);
     echo $msgError;
 }

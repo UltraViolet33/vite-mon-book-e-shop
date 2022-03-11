@@ -27,12 +27,24 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Categorie</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="signUp" class="nav-link">Sign Up</a>
-                                </li>
+
+                                <?php if (isset($data['userData'])) : ?>
+                                    <li class="nav-item">
+                                        <a href="signUp" class="nav-link"><?= $data['userData']->pseudoMember ?></a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if (isset($data['userData'])) : ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="logout">Logout</a>
+                                    </li>
+                                <?php else :; ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="login">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="signUp">signUp</a>
+                                    </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
