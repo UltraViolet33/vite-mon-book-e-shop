@@ -17,7 +17,7 @@ class Home extends Controller
         //     $data['userData'] = $userData;
         // }
 
-        // $data['pageTitle'] = "Home";
-        $this->view("home");
+        $data['pageTitle'] = "Home";
+        $this->view("home", $data);
     }
 }
