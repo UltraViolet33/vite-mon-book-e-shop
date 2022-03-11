@@ -13,9 +13,6 @@ include "../app/init.php";
 
 $path = str_replace("index.php", "", $path);
 
-
 define("ROOT", $path);
-
-echo $path;
 
 $app = new App();

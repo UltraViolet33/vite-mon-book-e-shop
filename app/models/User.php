@@ -129,7 +129,11 @@ class User
         }
         $_SESSION['error'] = $this->error;
     }
-
+    
+    /**
+     * checkLogin
+     * check if the user is log in and if he is admin (to access admin part)
+     */
     public function checkLogin($allowed = array())
     {
         $db = Database::newInstance();
@@ -155,22 +159,29 @@ class User
         } else {
             if (isset($_SESSION['idMember'])) {
                 $arr = false;
-                $arr['idMember'] =   $_SESSION['idMember'];
+                $arr['idMember'] = $_SESSION['idMember'];
                 $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
                 $result = $db->read($query, $arr);
                 if (is_array($result)) {
-                    show($result[0]);
                     return $result[0];
                 }
             }
         }
         return false;
     }
-
-
-
-
-
+    
+    /**
+     * logout
+     * logout the user and load the home view
+     */
+    public function logout()
+    {
+      if (isset($_SESSION['idMember'])) {
+        unset($_SESSION['idMember']);
+      }
+      header("Location: " . ROOT . "home");
+    }
+  
     /**
      * checkEmail
      * check if there is already an email in the members table
