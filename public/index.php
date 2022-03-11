@@ -1,9 +1,9 @@
 <?php
 
 session_start();
+
 // path on MAMP
 // $path = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-
 // define("ASSETS", $path . "assets/");
 
 include "../app/init.php";

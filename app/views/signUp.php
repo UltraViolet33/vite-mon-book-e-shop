@@ -1,5 +1,4 @@
 <?php $this->view("inc/header", $data); ?>
-
 <div class="container">
     <div class="row">
         <div class="col-12">
