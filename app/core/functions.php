@@ -17,30 +17,12 @@ function show($data)
  */
 function checkError()
 {
+    $msgError = "";
     if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
-        echo $_SESSION['error'];
-        // unset($_SESSION['error']);
+        $msgError .= '<div class="bg-danger p-3">
+                            <span style="font-size:24px" >' . $_SESSION['error'] . '</span>
+                    </div>';
+        unset($_SESSION['error']);
     }
-}
-
-/**
- * debug
- * debug a variable
- */
-function debug($data, $mode = 1)
-{
-    echo '<div style="background: orange; padding: 5px; float: right; clear: both; ">';
-    $trace = debug_backtrace();
-    $trace = array_shift($trace);
-    echo 'Debug demandé dans le fichier : $trace[file] à la ligne $trace[line].';
-    if ($mode === 1) {
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
-    } else {
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
-    }
-    echo '</div>';
+    echo $msgError;
 }
