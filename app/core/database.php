@@ -2,7 +2,6 @@
 
 class Database
 {
-
     public static $con;
 
     /**

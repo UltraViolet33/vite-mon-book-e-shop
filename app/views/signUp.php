@@ -45,7 +45,7 @@
                     </div>
                     <input type="submit" class="btn btn-primary" name="signUp" value="Valider">
                 </form>
-              <?= checkError()?>
+                <?= checkError() ?>
             </div>
         </div>
     </div>

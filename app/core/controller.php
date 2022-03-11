@@ -2,7 +2,10 @@
 
 class Controller
 {
-
+    /**
+     * view
+     * load a view file
+     */
     public function view($path, $data = [])
     {
         extract($data);
@@ -14,6 +17,10 @@ class Controller
         }
     }
 
+    /**
+     * loadModel
+     * load a model file
+     */
     public function loadModel($model)
     {
         if (file_exists("../app/models/" .  strtolower($model) . ".php")) {

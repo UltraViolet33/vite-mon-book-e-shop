@@ -31,15 +31,15 @@ class User
 
         // check the datas 
         if (empty($data['nameMember']) || !preg_match("/^[a-zA-Z]+$/", $data['nameMember'])) {
-            $this->error .= "Veuillez entrez un nom valide. <br>";
+            // $this->error .= "Veuillez entrez un nom valide. <br>";
         }
 
         if (empty($data['firstnameMember']) || !preg_match("/^[a-zA-Z]+$/", $data['firstnameMember'])) {
-            $this->error .= "Veuillez entrez un prénom valide. <br>";
+            // $this->error .= "Veuillez entrez un prénom valide. <br>";
         }
 
         if (empty($data['pseudoMember']) || !preg_match("/^[a-zA-Z]+$/", $data['pseudoMember'])) {
-            $this->error .= "Veuillez entrez un pseudo valide. <br>";
+            // $this->error .= "Veuillez entrez un pseudo valide. <br>";
         }
 
         if (empty($data['emailMember']) || !preg_match("/^[a-zA-Z_-]+@[a-zA-Z]+.[a-zA-Z]+$/", $data['emailMember'])) {
@@ -81,17 +81,108 @@ class User
 
             $result = $db->write($query, $data);
             if ($result) {
-
-                echo "ok!!!!!";
-                //   header("Location: " . ROOT . "login");
-                //   die;
-            } else {
-                echo "pas ok";
+                header("Location: " . "login");
+                die;
             }
         }
         $_SESSION['error'] = $this->error;
     }
 
+    /**
+     * login
+     * check the data from the login form and login the user if there are corrects
+     */
+    public function login()
+    {
+        $db = Database::newInstance();
+        $data = array();
+        /**
+         * trim and htmlspecialchars on the data POST
+         * do a method
+         */
+        $data['emailMember'] = trim($_POST['email']);
+        $data['passwordMember'] = trim($_POST['password']);
+
+
+        if (empty($data['emailMember'])) {
+            $this->error .= "Veuillez entrez un email valide. <br>";
+        }
+
+        if (empty($data['passwordMember'])) {
+            $this->error .= "Veuillez renseigner votre mot de passe. <br>";
+        }
+
+        if ($this->error == "") {
+            //confirm
+            $data['passwordMember'] = hash('sha1', $data['passwordMember']);
+
+            //check if email exists with the password
+            $sql = "SELECT * FROM member WHERE emailMember = :emailMember && passwordMember = :passwordMember limit 1";
+            $result = $db->read($sql, $data);
+
+            if (is_array($result)) {
+                $_SESSION['idMember'] = $result[0]->idMember;
+                header("Location: " . "home");
+                die;
+            }
+            $this->error .= "Email ou mot de passe incorrect. <br>";
+        }
+        $_SESSION['error'] = $this->error;
+    }
+    
+    /**
+     * checkLogin
+     * check if the user is log in and if he is admin (to access admin part)
+     */
+    public function checkLogin($allowed = array())
+    {
+        $db = Database::newInstance();
+
+        if (count($allowed) > 0) {
+            $arr['idMember'] = $_SESSION['idMember'];
+            $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
+            $result = $db->read($query, $arr);
+
+            if (is_array($result)) {
+                $result = $result[0];
+
+                if (in_array($result->rank, $allowed)) {
+                    return $result;
+                } else {
+                    header("Location: " . "login");
+                    die;
+                }
+            } else {
+                header("Location: " . "login");
+                die;
+            }
+        } else {
+            if (isset($_SESSION['idMember'])) {
+                $arr = false;
+                $arr['idMember'] = $_SESSION['idMember'];
+                $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
+                $result = $db->read($query, $arr);
+                if (is_array($result)) {
+                    //show($result[0]);
+                    return $result[0];
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * logout
+     * logout the user and load the home view
+     */
+    public function logout()
+    {
+      if (isset($_SESSION['idMember'])) {
+        unset($_SESSION['idMember']);
+      }
+      header("Location: " . ROOT . "home");
+    }
+  
     /**
      * checkEmail
      * check if there is already an email in the members table
