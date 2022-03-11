@@ -11,11 +11,12 @@ class Home extends Controller
      */
     public function index()
     {
-        // $user = $this->loadModel('User');
-        // $userData = $user->checkLogin();
-        // if (is_object($userData)) {
-        //     $data['userData'] = $userData;
-        // }
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin();
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
 
         $data['pageTitle'] = "Home";
         $this->view("home", $data);

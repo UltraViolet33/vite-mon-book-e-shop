@@ -11,10 +11,10 @@ class Login extends Controller
      */
     public function index()
     {
-        // if ($_SERVER['REQUEST_METHOD'] === "POST") {
-        //     $user = $this->loadModel("User");
-        //     $user->signup();
-        // }
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $user = $this->loadModel("User");
+            $user->login();
+        }
 
         $data['pageTitle'] = "Login";
         $this->view("login", $data);
