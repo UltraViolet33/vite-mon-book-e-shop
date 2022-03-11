@@ -11,10 +11,10 @@ class Signup extends Controller
      */
     public function index()
     {
-        // if ($_SERVER['REQUEST_METHOD'] === "POST") {
-        //     $user = $this->loadModel("User");
-        //     $user->signup($_POST);
-        // }
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $user = $this->loadModel("User");
+            $user->signup();
+        }
 
         $data['pageTitle'] = "Signup";
         $this->view("signUp", $data);
