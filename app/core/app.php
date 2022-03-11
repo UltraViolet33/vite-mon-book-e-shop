@@ -5,10 +5,10 @@ class App
     protected $controller = "home";
     protected $method = "index";
     protected $params;
-    
+
     /**
      * __construct
-     * extract the current URL and load the good controller with the good method
+     * load the controller and the method
      */
     public function __construct()
     {
@@ -24,7 +24,6 @@ class App
         require("../app/controllers/" . $this->controller . ".php");
         $this->controller = new $this->controller;
 
-        // if there is a method in the URL
         if (isset($url[1])) {
             $url[1] = strtolower($url[1]);
             if (method_exists($this->controller, $url[1])) {
@@ -34,14 +33,13 @@ class App
         }
 
         $this->params = (count($url) > 0) ? $url : ["home"];
-        // load the method of the controller
         call_user_func_array([$this->controller, $this->method], $this->params);
-        // show(array_values($url));
+        //show(array_values($url));
     }
-    
+
     /**
      * parseURL
-     * @return the URL
+     * return the URL
      */
     private function parseURL()
     {
