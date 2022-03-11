@@ -163,6 +163,7 @@ class User
                 $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
                 $result = $db->read($query, $arr);
                 if (is_array($result)) {
+                    //show($result[0]);
                     return $result[0];
                 }
             }
