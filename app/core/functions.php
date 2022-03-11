@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * show
  * show the data in a readable format
