@@ -2,7 +2,6 @@
 
 class Controller
 {
-    
     /**
      * view
      * load a view file
@@ -17,7 +16,7 @@ class Controller
             include "../app/views/404.php";
         }
     }
-    
+
     /**
      * loadModel
      * load a model file
