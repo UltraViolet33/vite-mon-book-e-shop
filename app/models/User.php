@@ -144,7 +144,7 @@ class User
             if (is_array($result)) {
                 $result = $result[0];
 
-                if (in_array($result->rank, $allowed)) {
+                if ($result->isAdmin) {
                     return $result;
                 } else {
                     header("Location: " . "login");
