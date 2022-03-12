@@ -45,12 +45,12 @@ class Admin extends Controller
         $this->view("admin/categories", $data);
     }
 
-     /**
+    /**
      * categories
      * Load the User model and the admin/categories view
      * @return admin/categories view
      */
-    public function products()
+    public function products($method = false, $arg = "")
     {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin']);
@@ -59,9 +59,28 @@ class Admin extends Controller
             $data['userData'] = $userData;
         }
 
-        // get all the products and the HTML table
-
-        $data['pageTitle'] = "Admin - Products";
-        $this->view("admin/products", $data);
-    }    
+        if ($method === "add") {
+            $this->addProduct($data);
+        } elseif ($method === "home") {
+            // get all the products and the HTML table
+            $data['pageTitle'] = "Admin - Products";
+            $this->view("admin/products", $data);
+        }
+    }
+    
+    /**
+     * addProduct
+     *Load the admin/products/add view
+     * @param  array $data
+     * @return admin/products/add view
+     */
+    public function addProduct($data)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            show($_POST);
+            show($_FILES);
+        }
+        $data['pageTitle'] = "Admin - Add Product";
+        $this->view("admin/addProduct", $data);
+    }
 }
