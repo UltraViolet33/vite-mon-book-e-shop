@@ -73,7 +73,7 @@
                                     <a class="nav-link" href="<?= ROOT ?>admin/categories">View Categories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">View Products</a>
+                                    <a class="nav-link" href="<?= ROOT ?>admin/products">View Products</a>
                                 </li>
                             </ul>
                         </div>
