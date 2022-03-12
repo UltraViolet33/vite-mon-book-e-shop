@@ -13,11 +13,11 @@ class Admin extends Controller
     {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin']);
-         if (is_object($userData)) {
-             $data['userData'] = $userData;
-         }
-         $data['pageTitle'] = "Admin - Home";
-         $this->view("admin/index", $data);
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+        $data['pageTitle'] = "Admin - Home";
+        $this->view("admin/index", $data);
     }
 
     /**
@@ -29,16 +29,16 @@ class Admin extends Controller
     {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin']);
-         if (is_object($userData)) {
-             $data['userData'] = $userData;
-         }
-         $data['pageTitle'] = "Admin - Categories";
-         $this->view("admin/categories", $data);
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+
+        $category = $this->loadModel('Category');
+        $allCategories = $category->getAll();
+
+        $data['cat'] = $allCategories;
+        $data['pageTitle'] = "Admin - Categories";
+        $this->view("admin/categories", $data);
     }
-
-
-    
-
-
-    
 }

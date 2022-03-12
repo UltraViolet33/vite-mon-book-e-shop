@@ -5,7 +5,6 @@
             <h1 class="text-center">Categories - Admin</h1>
         </div>
     </div>
-
     <div class="row justify-content-center">
         <div class="col-8">
             <button class="btn btn-primary" onclick="displayForm()">Ajouter Catégorie</button>
@@ -23,7 +22,6 @@
     </div>
 </div>
 <script>
-
     /**
      * sendDataAjax
      * send the data to the Ajax controller PHP
@@ -32,8 +30,8 @@
      */
     function sendDataAjax(data = {}) {
         const ajax = new XMLHttpRequest();
-        ajax.onload = function () {
-          alert(ajax.responseText);
+        ajax.onload = function() {
+            alert(ajax.responseText);
         };
 
         // ajax.addEventListener('readystatechange', function() {
@@ -41,8 +39,8 @@
         //         alert(ajax.responseText);
         //     }
         // });
-        
-        ajax.open("POST", "<?= ROOT ?>ajax", true);
+
+        ajax.open("POST", "<?= ROOT ?>categoryAjax", true);
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.send(JSON.stringify(data));
 
