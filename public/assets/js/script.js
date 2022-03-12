@@ -7,20 +7,6 @@ function displayForm() {
   const formCat_div = document.querySelector(".formCat");
   formCat_div.classList.toggle("showFormCat");
 }
-/**
- * sendDataAjax
- * send the data to the Ajax controller PHP
- * @param  {object} data={}
- * @return void
- */
-function sendDataAjax(data = {}) {
-  const ajax = new XMLHttpRequest();
-  ajax.onload = function () {
-    alert(ajax.responseText);
-  };
-  ajax.open("POST", "<?= ROOT ?>ajax", true);
-  ajax.send(JSON.stringify(data));
-}
 
 /**
  * collectDataCat
