@@ -59,27 +59,36 @@ class Admin extends Controller
             $data['userData'] = $userData;
         }
 
+        $product = $this->loadModel('Product');
+
         if ($method === "add") {
-            $this->addProduct($data);
+            $this->addProduct($data, $product);
         } elseif ($method === "home") {
             // get all the products and the HTML table
             $data['pageTitle'] = "Admin - Products";
             $this->view("admin/products", $data);
         }
     }
-    
+
     /**
      * addProduct
      *Load the admin/products/add view
      * @param  array $data
      * @return admin/products/add view
      */
-    public function addProduct($data)
+    public function addProduct($data, $productModel)
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $productModel->create();
             show($_POST);
             show($_FILES);
         }
+        $category = $this->loadModel('Category');
+        $allCategories = $category->getAll();
+        $selectHTML = $productModel->makeSelectCategories($allCategories);
+
+        $data['selectHTML'] = $selectHTML;
+        $data['categories'] = $allCategories;
         $data['pageTitle'] = "Admin - Add Product";
         $this->view("admin/addProduct", $data);
     }

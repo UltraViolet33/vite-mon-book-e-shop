@@ -16,9 +16,10 @@
                     <label for="category" class="form-label">Catégorie Produit : </label>
                     <select name="category" class="form-select">
                         <option selected>Choississez une catégorie</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <?php if (isset($selectHTML)) {
+                            echo $selectHTML;
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="mb-3">
