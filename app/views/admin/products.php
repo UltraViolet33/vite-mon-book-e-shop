@@ -28,6 +28,9 @@
                     </tr>
                 </thead>
                 <tbody id="tableProducts">
+                    <?php
+                    echo $tableHTML;
+                    ?>
                 </tbody>
             </table>
 

@@ -65,6 +65,10 @@ class Admin extends Controller
             $this->addProduct($data, $product);
         } elseif ($method === "home") {
             // get all the products and the HTML table
+            $allProducts = $product->getAllProducts();
+            $tableHTML = $product->makeTable($allProducts);
+
+            $data['tableHTML'] = $tableHTML;
             $data['pageTitle'] = "Admin - Products";
             $this->view("admin/products", $data);
         }
