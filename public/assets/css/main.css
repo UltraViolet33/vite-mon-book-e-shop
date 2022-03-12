@@ -5,3 +5,11 @@ main css file
 .bold {
   font-weight: bold;
 }
+
+.formCat {
+  display: none;
+}
+
+.showFormCat {
+  display: block;
+}

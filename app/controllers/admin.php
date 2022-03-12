@@ -19,4 +19,26 @@ class Admin extends Controller
          $data['pageTitle'] = "Admin - Home";
          $this->view("admin/index", $data);
     }
+
+    /**
+     * categories
+     * Load the User model and the admin/categories view
+     * @return admin/categories view
+     */
+    public function categories()
+    {
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin(['admin']);
+         if (is_object($userData)) {
+             $data['userData'] = $userData;
+         }
+         $data['pageTitle'] = "Admin - Categories";
+         $this->view("admin/categories", $data);
+    }
+
+
+    
+
+
+    
 }

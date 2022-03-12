@@ -11,15 +11,15 @@
         <div class="col-8">
             <button class="btn btn-primary" onclick="displayForm()">Ajouter Catégorie</button>
         </div>
-        <div class="col-8 hide">
+        <div class="col-8 formCat">
             <form action="">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom de la catégorie : </label>
-                    <input type="text" name='name' class="form-control">
+                    <input id="inputAddCat"type="text" name='name' class="form-control">
                 </div>
-                <button class="btn btn-primary">Valider</button>
+                <button  type="button" onclick="collectDataCat()" class="btn btn-primary">Valider</button>
+                <button type="button" onclick="displayForm()" class="btn btn-warning">Fermer</button>
             </form>
-
         </div>
     </div>
 </div>
