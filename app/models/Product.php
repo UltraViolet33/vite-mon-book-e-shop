@@ -52,17 +52,20 @@ class Product
 
             $result = $db->write($query, $data);
             if ($result) {
-              echo "OK";
-             
-            }else
-            {
+                echo "OK";
+            } else {
                 echo "pas ok";
             }
         }
-
-
-
         $_SESSION['error'] = $this->error;
+    }
+
+
+    public function getAllProducts()
+    {
+        $db = Database::newInstance();
+        $data = $db->read("SELECT * FROM product ORDER BY idProduct ASC");
+        return $data;
     }
 
     public function makeSelectCategories($categories)
@@ -72,5 +75,32 @@ class Product
             $selectHTML .= '<option value="' . $category->idCategory . '">' . $category->nameCategory . '</option>';
         }
         return $selectHTML;
+    }
+
+    /**
+     * makeTable
+     * make the categories HTML table for admin categories view
+     * @param  array $categories
+     * @return string HTML elements
+     */
+    public function makeTable($products)
+    {
+        $tableHTML = "";
+        if (is_array($products)) {
+            foreach ($products as $product) {
+                $tableHTML .= '<tr>
+                            <th scope="row">' . $product->idProduct . '</th>
+                            <td>' . $product->nameProduct . '</td>
+                            <td>' . $product->descriptionProduct . '</td>
+                            <td>' . $product->priceProduct . '</td>
+                            <td>' . $product->stockProduct . '</td>
+                            <td>' . $product->imageProduct . '</td>
+                            <td>' . $product->idCategoryProduct . '</td>
+                            <td><button class="btn btn-primary">Modifier</button></td>
+                            <td><button class="btn btn-warning">Supprimer</button></td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
     }
 }
