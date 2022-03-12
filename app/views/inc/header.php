@@ -28,13 +28,15 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Categorie</a>
                                 </li>
-
                                 <?php if (isset($data['userData'])) : ?>
+                                    <?php if ($data['userData']->isAdmin) : ?>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Admin</a>
+                                        </li>
+                                    <?php endif; ?>
                                     <li class="nav-item">
                                         <a href="profil" class="nav-link"><?= $data['userData']->pseudoMember ?></a>
                                     </li>
-                                <?php endif; ?>
-                                <?php if (isset($data['userData'])) : ?>
                                     <li class="nav-item">
                                         <a class="nav-link" href="logout">Logout</a>
                                     </li>
