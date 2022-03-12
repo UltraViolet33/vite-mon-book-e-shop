@@ -5,3 +5,20 @@ main css file
 .bold {
   font-weight: bold;
 }
+
+.formCat {
+  display: none;
+}
+
+.showFormCat {
+  display: block;
+}
+
+button > a {
+  color: white !important;
+  text-decoration: none;
+}
+
+textarea {
+  resize: none;
+}
