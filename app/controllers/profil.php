@@ -7,6 +7,7 @@ class Profil extends Controller
     /**
      * index
      * load the User model and load the profil view
+     * @return view profil
      */
     public function index()
     {

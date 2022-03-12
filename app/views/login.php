@@ -18,6 +18,7 @@
                     <input type="submit" class="btn btn-primary" name="login" value="Valider">
                 </form>
                 <?= checkError() ?>
+                <p>Pas encore de profil ? Inscrivez-vous <a href="signUp">Ici</a></p>
             </div>
         </div>
     </div>

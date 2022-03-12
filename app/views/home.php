@@ -1,7 +1,7 @@
 <?php $this->view("inc/header", $data); ?>
 <div class="row justify-content-center">
     <div class="col-6 text-center">
-        <h1 class="">Vite mon Book !</h1>
+        <h1>Vite mon Book !</h1>
         <h2>Site de vente de livres en ligne</h2>
     </div>
 </div>

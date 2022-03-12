@@ -6,7 +6,8 @@ class Logout extends Controller
 {
     /**
      * index
-     * load the User Model and the logout method
+     * load the User model and the logout method
+     * @return void
      */
     public function index()
     {

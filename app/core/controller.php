@@ -5,6 +5,7 @@ class Controller
     /**
      * view
      * load a view file
+     * @return void
      */
     public function view($path, $data = [])
     {
@@ -20,6 +21,7 @@ class Controller
     /**
      * loadModel
      * load a model file
+     * @return object
      */
     public function loadModel($model)
     {

@@ -6,8 +6,8 @@ class Login extends Controller
 {
     /**
      * index
-     * load the User model and load the signup views
-     * @return view
+     * load the User model and load the login view
+     * @return view login
      */
     public function index()
     {
