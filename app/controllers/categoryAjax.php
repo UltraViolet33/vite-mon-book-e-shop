@@ -2,7 +2,7 @@
 
 require_once('../app/core/controller.php');
 
-class Ajax extends Controller
+class CategoryAjax extends Controller
 {
     
     /**
