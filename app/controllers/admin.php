@@ -34,10 +34,13 @@ class Admin extends Controller
             $data['userData'] = $userData;
         }
 
+        // get all the categories and the HTML table
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
+        $tableHTML = $category->makeTable($allCategories);
 
-        $data['cat'] = $allCategories;
+
+        $data['tableHTML'] = $tableHTML;
         $data['pageTitle'] = "Admin - Categories";
         $this->view("admin/categories", $data);
     }

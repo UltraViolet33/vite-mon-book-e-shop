@@ -20,7 +20,6 @@ class CategoryAjax extends Controller
     {
         $data = file_get_contents("php://input");
         $data = json_decode($data);
-        var_dump($data);
 
         if (is_object($data) && isset($data->dataType)) {
 
@@ -37,8 +36,8 @@ class CategoryAjax extends Controller
         if ($result) {
             $arr['message'] = "Insertion OK";
             $arr['messageType'] = "info";
-            // $categories = $this->category->getAll();
-            // $arr['data'] = $this->category->makeTable($categories);
+            $categories = $this->category->getAll();
+            $arr['data'] = $this->category->makeTable($categories);
             $arr['dataType'] = "addCategory";
             echo json_encode($arr);
         } else {

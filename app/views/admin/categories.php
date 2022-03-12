@@ -19,6 +19,27 @@
                 <button type="button" onclick="displayForm()" class="btn btn-warning">Fermer</button>
             </form>
         </div>
+
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Modifier</th>
+                            <th scope="col">Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableCategories">
+                        <?php
+                        echo $tableHTML;
+                        ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -31,7 +52,8 @@
     function sendDataAjax(data = {}) {
         const ajax = new XMLHttpRequest();
         ajax.onload = function() {
-            alert(ajax.responseText);
+            //alert(ajax.responseText);
+            handleResultAjax(ajax.responseText);
         };
 
         // ajax.addEventListener('readystatechange', function() {
@@ -44,6 +66,28 @@
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.send(JSON.stringify(data));
 
+    }
+    
+    /**
+     * handleResultAjax
+     * get the result from PHP and update the HTML table for categories
+     * @return void
+     */
+    function handleResultAjax(result) {
+        console.log('azeghk')
+        if (result != "") {
+            let resultObj = JSON.parse(result);
+
+            if (typeof resultObj.dataType != "undefined") {
+                if (resultObj.dataType == "addCategory") {
+                    if (resultObj.messageType == "info") {
+                        displayForm();
+                        const tableCategories_tbody = document.querySelector('#tableCategories');
+                        tableCategories_tbody.innerHTML = resultObj.data;
+                    }
+                }
+            }
+        }
     }
 </script>
 <?php $this->view("inc/footer", $data); ?>

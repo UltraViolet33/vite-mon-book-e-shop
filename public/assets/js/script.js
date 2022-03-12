@@ -29,6 +29,7 @@ function collectDataCat() {
       data: data,
       dataType: "addCategory",
     };
+    categoryAdd_input.value = "";
     console.table(objData);
     sendDataAjax(objData);
   }

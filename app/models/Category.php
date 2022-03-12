@@ -2,7 +2,12 @@
 
 class Category
 {
-
+    /**
+     * create
+     * insert a category into the database
+     * @param  object $data
+     * @return void
+     */
     public function create($data)
     {
         $db = Database::newInstance();
@@ -23,11 +28,38 @@ class Category
         return false;
     }
 
+    /**
+     * getAll
+     * select all the categories from the database
+     * @return array
+     */
     public function getAll()
     {
         $db = Database::newInstance();
-        $data = $db->read("SELECT * FROM category ORDER BY idCategory DESC");
+        $data = $db->read("SELECT * FROM category ORDER BY idCategory ASC");
         return $data;
     }
 
+
+    /**
+     * makeTable
+     * make the categories HTML table for admin categories view
+     * @param  array $categories
+     * @return string HTML elements
+     */
+    public function makeTable($categories)
+    {
+        $tableHTML = "";
+        if (is_array($categories)) {
+            foreach ($categories as $category) {
+                $tableHTML .= '<tr>
+                            <th scope="row">' . $category->idCategory . '</th>
+                            <td>' . $category->nameCategory . '</td>
+                            <td><button class="btn btn-primary">Modifier</button></td>
+                            <td><button class="btn btn-warning">Supprimer</button></td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
+    }
 }
