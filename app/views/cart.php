@@ -5,13 +5,8 @@
             <h1 class="">Votre Panier</h1>
         </div>
     </div>
-    <?php
-    if (empty($_SESSION['cart']['idProduct'])) {
-        echo "pas de panier";
-    } else {
-        echo "panier";
-    }
-    ?>
+  
+ 
     <table class="table">
         <thead>
             <tr>
@@ -22,9 +17,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-            echo $cart;
-            ?>
+        
+          
         </tbody>
     </table>
     <button><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>

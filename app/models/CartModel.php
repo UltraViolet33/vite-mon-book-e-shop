@@ -4,7 +4,7 @@ class CartModel
 {
     public function __construct()
     {
-        if(!isset($_SESSION['cart']))
+        if(!isset($_SESSION['idMember']['cart']))
         {
             $_SESSION['cart'] = array();
             $_SESSION['cart']['name'] = array();
@@ -29,17 +29,20 @@ class CartModel
 
     public function makeHTMLCart($cart)
     {
-        show($cart);
-
-        $html = "";
-        for($i=0; $i<count($cart['idProduct']); $i++)
+        
+        if(is_array($cart))
         {
-            $html .= '<tr>
-                        <th scope="row">1</th>
-                        <td>'.$cart['name'][$i].'</td>
-                        <td>'.$cart['quantity'][$i].'</td>
-                        <td>'.$cart['price'][$i].'</td>
-                        </th>';
+            $html = "";
+            for($i=0; $i<count($cart['idProduct']); $i++)
+            {
+                $html .= '<tr>
+                            <th scope="row">1</th>
+                            <td>'.$cart['name'][$i].'</td>
+                            <td>'.$cart['quantity'][$i].'</td>
+                            <td>'.$cart['price'][$i].'</td>
+                            </th>';
+            }
+
         }
 
         return $html;
