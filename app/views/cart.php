@@ -17,6 +17,10 @@
             </tr>
         </thead>
         <tbody>
+
+        <?php
+echo $cart;
+            ?>
         
           
         </tbody>
