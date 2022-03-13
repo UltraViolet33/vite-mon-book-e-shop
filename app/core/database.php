@@ -79,4 +79,9 @@ class Database
 
         return false;
     }
+
+    public function getLastInsertId()
+    {
+        return self::$con->lastInsertId();
+    }
 }

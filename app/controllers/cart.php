@@ -21,12 +21,14 @@ class Cart extends Controller
 
         $html = '<tr><td colspan="4" class="text-center">Vous n\'avez aucun produit dans votre panier</td></tr>';
 
-        if(isset($_SESSION['cart']))
-        {
+        $button = null;
+        if (isset($_SESSION['cart'])) {
             $cart = $this->loadModel('CartModel');
             $html = $cart->makeHTMLCart($_SESSION['cart']);
+            $button = '<button><a href="' . ROOT . 'command">Valider</a></button>';
         }
 
+        $data['button'] = $button;
         $data['cart'] = $html;
         $data['pageTitle'] = "Panier";
         $this->view('cart', $data);
@@ -46,16 +48,14 @@ class Cart extends Controller
         $cart = $this->loadModel('CartModel');
         $cart->addToCart($product[0]);
         //show($_SESSION['cart']);
-        header("location:". ROOT. "cart");
-
+        header("location:" . ROOT . "cart");
     }
 
     public function deleteCart()
     {
-        if(isset($_SESSION['cart']))
-        {
+        if (isset($_SESSION['cart'])) {
             unset($_SESSION['cart']);
         }
-        header("location:". ROOT. "cart");
+        header("location:" . ROOT . "cart");
     }
 }

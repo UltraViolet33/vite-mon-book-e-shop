@@ -5,8 +5,8 @@
             <h1 class="">Votre Panier</h1>
         </div>
     </div>
-  
- 
+
+
     <table class="table">
         <thead>
             <tr>
@@ -18,13 +18,20 @@
         </thead>
         <tbody>
 
-        <?php
-echo $cart;
+            <?php
+            echo $cart;
             ?>
-        
-          
+
+
         </tbody>
     </table>
     <button><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>
+    <?php
+
+    if (isset($button)) {
+        echo $button;
+    }
+
+    ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>
