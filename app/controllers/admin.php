@@ -39,7 +39,6 @@ class Admin extends Controller
         $allCategories = $category->getAll();
         $tableHTML = $category->makeTable($allCategories);
 
-
         $data['tableHTML'] = $tableHTML;
         $data['pageTitle'] = "Admin - Categories";
         $this->view("admin/categories", $data);
@@ -87,6 +86,8 @@ class Admin extends Controller
             show($_POST);
             show($_FILES);
         }
+
+        //get all the categories for the select in the form addProduct
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
         $selectHTML = $productModel->makeSelectCategories($allCategories);

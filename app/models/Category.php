@@ -6,7 +6,7 @@ class Category
      * create
      * insert a category into the database
      * @param  object $data
-     * @return void
+     * @return bool
      */
     public function create($data)
     {

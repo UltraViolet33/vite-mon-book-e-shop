@@ -96,7 +96,7 @@ class User
     public function login()
     {
         $db = Database::newInstance();
-        
+
         $data = array();
         $data['emailMember'] = validateData($_POST['email']);
         $data['passwordMember'] = validateData($_POST['password']);
@@ -194,7 +194,7 @@ class User
         $arr['emailMember'] = $data['emailMember'];
         return $db->read($query, $arr);
     }
-    
+
     /**
      * checkPseudo
      * check if the pseudo is already in the member table

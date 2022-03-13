@@ -3,7 +3,12 @@
 class Product
 {
     private $error = "";
-
+    
+    /**
+     * create
+     * insert a product into the BDD
+     * @return void
+     */
     public function create()
     {
         $db = Database::newInstance();
@@ -60,14 +65,25 @@ class Product
         $_SESSION['error'] = $this->error;
     }
 
-
+    
+    /**
+     * getAllProducts
+     * select all the products in the BDD
+     * @return array
+     */
     public function getAllProducts()
     {
         $db = Database::newInstance();
         $data = $db->read("SELECT * FROM product ORDER BY idProduct ASC");
         return $data;
     }
-
+    
+    /**
+     * makeSelectCategories
+     * make html elements for the form add product
+     * @param  arrays $categories
+     * @return string HTML
+     */
     public function makeSelectCategories($categories)
     {
         $selectHTML = "";
@@ -79,8 +95,8 @@ class Product
 
     /**
      * makeTable
-     * make the categories HTML table for admin categories view
-     * @param  array $categories
+     * make the product HTML table for admin products view
+     * @param  array $products
      * @return string HTML elements
      */
     public function makeTable($products)

@@ -30,6 +30,12 @@ class CategoryAjax extends Controller
     }
 
 
+    /**
+     * createCategory
+     * insert a category in the BDD and send back the message error or success
+     * @param  mixed $data
+     * @return void
+     */
     private function createCategory($data)
     {
         $result = $this->category->create($data);

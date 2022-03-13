@@ -67,7 +67,7 @@
         ajax.send(JSON.stringify(data));
 
     }
-    
+
     /**
      * handleResultAjax
      * get the result from PHP and update the HTML table for categories
