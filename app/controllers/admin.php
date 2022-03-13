@@ -83,8 +83,7 @@ class Admin extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $productModel->create();
-            show($_POST);
-            show($_FILES);
+            header("Location: " . ROOT . "admin/products");
         }
 
         //get all the categories for the select in the form addProduct
