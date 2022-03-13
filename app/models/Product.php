@@ -3,7 +3,7 @@
 class Product
 {
     private $error = "";
-    
+
     /**
      * create
      * insert a product into the BDD
@@ -23,8 +23,7 @@ class Product
         $data['idCategoryProduct'] = validateData($_POST['category']);
         $data['idCategoryProduct'] = (int)$data['idCategoryProduct'];
 
-
-        $data['imageProduct'] =  $_FILES['image']['name'];
+        $data['imageProduct'] = $_FILES['image']['name'];
 
         if (empty($data['nameProduct'])) {
             $this->error .= "Veuillez entrez un nom de produit valide. <br>";
@@ -52,6 +51,15 @@ class Product
 
         if ($this->error == "") {
 
+            $imageBDD = "";
+            $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
+            $imageBDD = ASSETS . "img/products/" . $nameImage;
+
+            $data['imageProduct'] = $nameImage;
+
+            $directory = $_SERVER['DOCUMENT_ROOT'] . ROOT_PATH . "public/assets/img/products/" . $nameImage;
+            copy($_FILES['image']['tmp_name'], $directory);
+
             $query = "INSERT INTO product (nameProduct, descriptionProduct, imageProduct, priceProduct, stockProduct, idCategoryProduct) 
             VALUES (:nameProduct, :descriptionProduct, :imageProduct, :priceProduct, :stockProduct, :idCategoryProduct)";
 
@@ -65,7 +73,26 @@ class Product
         $_SESSION['error'] = $this->error;
     }
 
-    
+    /**
+     * getRandomString
+     * return a randon string
+     * @param  int $length
+     * @return string
+     */
+    private function getRandomString($length)
+    {
+        $array = range('a', 'z');
+        $text = "";
+        $length = rand(4, $length);
+
+        for ($i = 0; $i < $length; $i++) {
+            $random = rand(0, count($array) - 1);
+            $text .= $array[$random];
+        }
+        return $text;
+    }
+
+
     /**
      * getAllProducts
      * select all the products in the BDD
@@ -77,7 +104,7 @@ class Product
         $data = $db->read("SELECT * FROM product ORDER BY idProduct ASC");
         return $data;
     }
-    
+
     /**
      * makeSelectCategories
      * make html elements for the form add product
@@ -110,7 +137,8 @@ class Product
                             <td>' . $product->descriptionProduct . '</td>
                             <td>' . $product->priceProduct . '</td>
                             <td>' . $product->stockProduct . '</td>
-                            <td>' . $product->imageProduct . '</td>
+                          
+                            <td><img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" ></td>
                             <td>' . $product->idCategoryProduct . '</td>
                             <td><button class="btn btn-primary">Modifier</button></td>
                             <td><button class="btn btn-warning">Supprimer</button></td>
