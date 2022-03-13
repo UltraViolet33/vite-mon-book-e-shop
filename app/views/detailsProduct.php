@@ -22,7 +22,7 @@
     </div>
     <div class="row my-5">
         <div class="offset-5">
-            <button class="btn btn-primary">Ajouter au panier</button>
+            <button class="btn btn-primary"><a href="<?= ROOT ?>cart/addcart/<?= $product->idProduct ?>">Ajouter au panier</a></button>
         </div>
     </div>
 </div>

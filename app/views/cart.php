@@ -12,5 +12,21 @@
         echo "panier";
     }
     ?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom du produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            echo $cart;
+            ?>
+        </tbody>
+    </table>
+    <button><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>
 </div>
 <?php $this->view("inc/footer", $data); ?>
