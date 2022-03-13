@@ -6,8 +6,8 @@ class Home extends Controller
 {
     /**
      * index
-     * load the User model and load the home views
-     * @return view
+     * load the User model and load the home view
+     * @return view home
      */
     public function index()
     {

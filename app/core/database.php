@@ -7,6 +7,7 @@ class Database
     /**
      * __construct
      * connexion to the BDD
+     * @return void
      */
     public function __construct()
     {
@@ -29,6 +30,11 @@ class Database
         return self::$con;
     }
 
+    /**
+     * newInstance
+     * new Instance of the bdd
+     * @return object
+     */
     public static function newInstance()
     {
         return $instance = new self();
@@ -38,6 +44,7 @@ class Database
     /**
      * read
      * read on the BDD
+     * @return array
      */
     public function read($query, $data = array())
     {
@@ -59,6 +66,7 @@ class Database
     /**
      * write
      * write on the BDD
+     * @return bool
      */
     public function write($query, $data = array())
     {

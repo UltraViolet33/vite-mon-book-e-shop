@@ -7,42 +7,37 @@ class User
     /**
      * signUp
      * check the data from the signUp form and insert the user in the database if there is no error
+     * @return void
      */
     public function signUp()
     {
         $db = Database::newInstance();
 
-        /**
-         * trim and htmlspecialchars on the data POST
-         * do a method
-         * checkif the pseudo already exists
-         */
-
         $data = array();
-        $data['nameMember'] = $_POST['name'];
-        $data['firstnameMember'] = $_POST['firstname'];
-        $data['pseudoMember'] = $_POST['pseudo'];
-        $data['emailMember'] = $_POST['email'];
-        $data['cityMember'] = $_POST['city'];
-        $data['postalCodeMember'] = $_POST['postalCode'];
-        $data['adressMember'] = $_POST['adress'];
+        $data['nameMember'] = validateData($_POST['name']);
+        $data['firstnameMember'] = validateData($_POST['firstname']);
+        $data['pseudoMember'] = validateData($_POST['pseudo']);
+        $data['emailMember'] = validateData($_POST['email']);
+        $data['cityMember'] = validateData($_POST['city']);
+        $data['postalCodeMember'] = validateData($_POST['postalCode']);
+        $data['adressMember'] = validateData($_POST['adress']);
         $data['passwordMember'] = $_POST['password'];
         $password2 = $_POST['password2'];
 
         // check the datas 
-        if (empty($data['nameMember']) || !preg_match("/^[a-zA-Z]+$/", $data['nameMember'])) {
-            // $this->error .= "Veuillez entrez un nom valide. <br>";
+        if (empty($data['nameMember']) || !preg_match("/^[a-zA-Z-' ]*$/", $data['nameMember'])) {
+            $this->error .= "Veuillez entrez un nom valide. <br>";
         }
 
-        if (empty($data['firstnameMember']) || !preg_match("/^[a-zA-Z]+$/", $data['firstnameMember'])) {
-            // $this->error .= "Veuillez entrez un prénom valide. <br>";
+        if (empty($data['firstnameMember']) || !preg_match("/^[a-zA-Z-' ]*$/", $data['nameMember'])) {
+            $this->error .= "Veuillez entrez un prénom valide. <br>";
         }
 
-        if (empty($data['pseudoMember']) || !preg_match("/^[a-zA-Z]+$/", $data['pseudoMember'])) {
-            // $this->error .= "Veuillez entrez un pseudo valide. <br>";
+        if (empty($data['pseudoMember'])) {
+            $this->error .= "Veuillez entrez un pseudo valide. <br>";
         }
 
-        if (empty($data['emailMember']) || !preg_match("/^[a-zA-Z_-]+@[a-zA-Z]+.[a-zA-Z]+$/", $data['emailMember'])) {
+        if (empty($data['emailMember']) || (!filter_var($data['emailMember'], FILTER_VALIDATE_EMAIL))) {
             $this->error .= "Veuillez entrez un email valide. <br>";
         }
 
@@ -66,18 +61,23 @@ class User
             $this->error .= "Le mot de passe doit être long de 4 caractères au minimun. <br>";
         }
 
-        $check = $this->checkEmail($data);
+        $checkEmail = $this->checkEmail($data);
 
-        if (is_array($check)) {
+        if (is_array($checkEmail)) {
             $this->error .= "L'email existe déjà, veuillez en renseigner un autre. <br>";
         }
 
+        $checkPseudo = $this->checkPseudo($data);
+
+        if (is_array($checkPseudo)) {
+            $this->error .= "Le pseudo existe déjà, veuillez en renseigner un autre. <br>";
+        }
+
         if ($this->error == "") {
-            $data['isAdmin'] = 0;
             $data['passwordMember'] = hash('sha1', $data['passwordMember']);
 
-            $query = "INSERT INTO member (pseudoMember, passwordMember, nameMember, firstnameMember, emailMember, cityMember, postalCodeMember, adressMember, isAdmin) 
-            VALUES (:pseudoMember, :passwordMember, :nameMember, :firstnameMember, :emailMember, :cityMember, :postalCodeMember, :adressMember, :isAdmin)";
+            $query = "INSERT INTO member (pseudoMember, passwordMember, nameMember, firstnameMember, emailMember, cityMember, postalCodeMember, adressMember) 
+            VALUES (:pseudoMember, :passwordMember, :nameMember, :firstnameMember, :emailMember, :cityMember, :postalCodeMember, :adressMember)";
 
             $result = $db->write($query, $data);
             if ($result) {
@@ -91,18 +91,15 @@ class User
     /**
      * login
      * check the data from the login form and login the user if there are corrects
+     * @return void
      */
     public function login()
     {
         $db = Database::newInstance();
-        $data = array();
-        /**
-         * trim and htmlspecialchars on the data POST
-         * do a method
-         */
-        $data['emailMember'] = trim($_POST['email']);
-        $data['passwordMember'] = trim($_POST['password']);
 
+        $data = array();
+        $data['emailMember'] = validateData($_POST['email']);
+        $data['passwordMember'] = validateData($_POST['password']);
 
         if (empty($data['emailMember'])) {
             $this->error .= "Veuillez entrez un email valide. <br>";
@@ -129,10 +126,11 @@ class User
         }
         $_SESSION['error'] = $this->error;
     }
-    
+
     /**
      * checkLogin
      * check if the user is log in and if he is admin (to access admin part)
+     * @return object
      */
     public function checkLogin($allowed = array())
     {
@@ -146,7 +144,7 @@ class User
             if (is_array($result)) {
                 $result = $result[0];
 
-                if (in_array($result->rank, $allowed)) {
+                if ($result->isAdmin) {
                     return $result;
                 } else {
                     header("Location: " . "login");
@@ -163,35 +161,51 @@ class User
                 $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
                 $result = $db->read($query, $arr);
                 if (is_array($result)) {
-                    //show($result[0]);
                     return $result[0];
                 }
             }
         }
         return false;
     }
-    
+
     /**
      * logout
      * logout the user and load the home view
+     * @return void
      */
     public function logout()
     {
-      if (isset($_SESSION['idMember'])) {
-        unset($_SESSION['idMember']);
-      }
-      header("Location: " . ROOT . "home");
+        if (isset($_SESSION['idMember'])) {
+            unset($_SESSION['idMember']);
+        }
+        header("Location: " . ROOT . "home");
     }
-  
+
     /**
      * checkEmail
      * check if there is already an email in the members table
+     * @param array $data
+     * @return array
      */
     private function checkEmail($data)
     {
         $db = Database::newInstance();
         $query = "SELECT * FROM member WHERE emailMember = :emailMember limit 1";
         $arr['emailMember'] = $data['emailMember'];
+        return $db->read($query, $arr);
+    }
+
+    /**
+     * checkPseudo
+     * check if the pseudo is already in the member table
+     * @param  array $data
+     * @return array
+     */
+    private function checkPseudo($data)
+    {
+        $db = Database::newInstance();
+        $query = "SELECT * FROM member WHERE pseudoMember = :pseudoMember limit 1";
+        $arr['pseudoMember'] = $data['pseudoMember'];
         return $db->read($query, $arr);
     }
 }

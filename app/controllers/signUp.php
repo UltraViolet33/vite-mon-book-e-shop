@@ -6,9 +6,9 @@ class Signup extends Controller
 {
     /**
      * index
-     * load the User model and load the signup views
-     * @return view
-     */
+     * load the User model and load the signup view
+     * @return view signup
+     */ 
     public function index()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {

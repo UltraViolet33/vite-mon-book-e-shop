@@ -13,37 +13,39 @@
 <body style="overflow-x:hidden">
     <div class="container-fluid">
         <div class="row">
-            <div class="clo-12">
+            <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="home">Vite mon Book !</a>
+                        <a class="navbar-brand" href="<?= ROOT ?>home">Vite mon Book !</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <a class="nav-link" aria-current="page" href="<?= ROOT ?>home">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Categorie</a>
                                 </li>
-
                                 <?php if (isset($data['userData'])) : ?>
+                                    <?php if ($data['userData']->isAdmin) : ?>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="<?= ROOT ?>admin">Admin</a>
+                                        </li>
+                                    <?php endif; ?>
                                     <li class="nav-item">
-                                        <a href="profil" class="nav-link"><?= $data['userData']->pseudoMember ?></a>
+                                        <a href="<?= ROOT ?>profil" class="nav-link"><?= $data['userData']->pseudoMember ?></a>
                                     </li>
-                                <?php endif; ?>
-                                <?php if (isset($data['userData'])) : ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="logout">Logout</a>
+                                        <a class="nav-link" href="<?= ROOT ?>logout">Logout</a>
                                     </li>
                                 <?php else :; ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="login">Login</a>
+                                        <a class="nav-link" href="<?= ROOT ?>login">Login</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="signUp">SignUp</a>
+                                        <a class="nav-link" href="<?= ROOT ?>signUp">SignUp</a>
                                     </li>
                                 <?php endif; ?>
                             </ul>
@@ -52,4 +54,31 @@
                 </nav>
             </div>
         </div>
+        <?php if ((isset($data['userData'])) && ($data['userData']->isAdmin)) : ?>
+            <div class="row">
+                <div class="col-12">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" href="admin">Admin Part</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page" href="<?= ROOT ?>admin">Admin Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<?= ROOT ?>admin/categories">View Categories</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<?= ROOT ?>admin/products">View Products</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
     </div>
+<?php endif; ?>

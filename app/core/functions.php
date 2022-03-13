@@ -3,6 +3,7 @@
 /**
  * show
  * show the data in a readable format
+ * @return void
  */
 function show($data)
 {
@@ -14,6 +15,7 @@ function show($data)
 /**
  * checkError
  * check if there is an error and display it
+ * @return void
  */
 function checkError()
 {
@@ -25,4 +27,18 @@ function checkError()
     }
     unset($_SESSION['error']);
     echo $msgError;
+}
+
+/**
+ * validateData
+ * validate $date before insert into the BDD
+ * @param  mixed $data
+ * @return mixed
+ */
+function validateData($data)
+{
+    $data = trim($data);
+    $data = htmlspecialchars($data);
+    $data = stripslashes($data);
+    return $data;
 }
