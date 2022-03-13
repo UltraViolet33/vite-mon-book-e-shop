@@ -147,4 +147,32 @@ class Product
         }
         return $tableHTML;
     }
+
+    
+    /**
+     * makeFrontProducts
+     * return HTML elements for the products page Front office
+     * @param  array $products
+     * @return string HTML
+     */
+    public function makeFrontProducts($products)
+    {
+        $html = "";
+
+        if (is_array($products)) {
+            foreach ($products as $product) {
+                $html .= '<div class="col-12 col-sm-6 col-lg-4 my-3">
+                            <div class="card">
+                                <img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" >
+                                <div class="card-body">
+                                    <h5 class="card-title">' . $product->nameProduct . '</h5>
+                                    <p class="card-text"' . $product->descriptionProduct . '</p>
+                                    <a href="#" class="btn btn-info">Voir plus</a>
+                                </div>
+                            </div>
+                        </div>';
+            }
+        }
+        return $html;
+    }
 }

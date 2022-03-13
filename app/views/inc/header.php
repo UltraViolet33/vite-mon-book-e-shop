@@ -28,6 +28,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Categorie</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= ROOT ?>products">Produits</a>
+                                </li>
                                 <?php if (isset($data['userData'])) : ?>
                                     <?php if ($data['userData']->isAdmin) : ?>
                                         <li class="nav-item">
