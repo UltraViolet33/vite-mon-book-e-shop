@@ -26,4 +26,28 @@ class Products extends Controller
         $data['pageTitle'] = "Produits";
         $this->view("products", $data);
     }
+
+    /**
+     * details
+     * get the data about the product and load the detailsProduct view
+     * @param  int $idProduct
+     * @return view detailsProduct
+     */
+    public function details($idProduct)
+    {
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin();
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+
+        //get the datas about the produt
+        $product = $this->loadModel('Product');
+        $singleProduct = $product->getOneProduct($idProduct);
+
+        $data['product'] = $singleProduct[0];
+        $data['pageTitle'] = "Details Produit";
+        $this->view("detailsProduct", $data);
+    }
 }

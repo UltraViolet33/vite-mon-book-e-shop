@@ -106,6 +106,21 @@ class Product
     }
 
     /**
+     * getOneProduct
+     * select all the datas about one product
+     * @param  int $idProduct
+     * @return array
+     */
+    public function getOneProduct($idProduct)
+    {
+        $arr['idProduct'] = $idProduct;
+        $db = Database::newInstance();
+        $query = "SELECT * FROM product WHERE idProduct = :idProduct";
+        $data = $db->read($query, $arr);
+        return $data;
+    }
+
+    /**
      * makeSelectCategories
      * make html elements for the form add product
      * @param  arrays $categories
@@ -148,7 +163,7 @@ class Product
         return $tableHTML;
     }
 
-    
+
     /**
      * makeFrontProducts
      * return HTML elements for the products page Front office
@@ -167,7 +182,7 @@ class Product
                                 <div class="card-body">
                                     <h5 class="card-title">' . $product->nameProduct . '</h5>
                                     <p class="card-text"' . $product->descriptionProduct . '</p>
-                                    <a href="#" class="btn btn-info">Voir plus</a>
+                                    <a href="' . ROOT . 'products/details/' . $product->idProduct . '" class="btn btn-info">Voir plus</a>
                                 </div>
                             </div>
                         </div>';
