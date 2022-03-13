@@ -2,22 +2,27 @@
 
 require_once('../app/core/controller.php');
 
-class Profil extends Controller
+class Cart extends Controller
 {
     /**
      * index
-     * load the User model and load the profil view
-     * @return view profil
+     * Load the User model and the cart view
+     * @return cart view
      */
     public function index()
     {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin', 'customer']);
+
         if (is_object($userData)) {
             $data['userData'] = $userData;
         }
 
-        $data['pageTitle'] = "Profil";
-        $this->view('profil', $data);
+        $data['cart'] = false;
+        $cart = $this->loadModel('CartModel');
+
+        $data['cart'] =   $_SESSION['cart'];
+        $data['pageTitle'] = "Panier";
+        $this->view("cart", $data);
     }
 }

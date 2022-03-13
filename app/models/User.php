@@ -144,9 +144,14 @@ class User
             if (is_array($result)) {
                 $result = $result[0];
 
-                if ($result->isAdmin) {
+                if ($result->isAdmin && $allowed[0] === 'admin') {
                     return $result;
-                } else {
+                } 
+                elseif($allowed[1] === "customer")
+                {
+                    return $result;
+                }
+                else {
                     header("Location: " . "login");
                     die;
                 }
