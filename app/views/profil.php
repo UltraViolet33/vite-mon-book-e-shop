@@ -10,7 +10,7 @@
         <div class="offset-2 col-4 infos">
             <h3>Informations générales</h3>
             <p>Nom : <span class="bold"> <?= $data['userData']->nameMember ?></span></p>
-            <p>Prénom : <span class="bold"> <?= $data['userData']->nameMember ?></span></p>
+            <p>Prénom : <span class="bold"> <?= $data['userData']->firstnameMember ?></span></p>
             <p>Pseudo : <span class="bold"><?= $data['userData']->pseudoMember ?> </span></p>
             <p>Email :<span class="bold"> <?= $data['userData']->emailMember ?></span></p>
         </div>
@@ -23,8 +23,8 @@
     </div>
     <div class="row my-5">
         <div class="offset-5">
-            <button class="btn btn-primary">Modifier</button>
-            <button class="btn btn-danger">Supprimer</button>
+            <button  class="btn btn-primary"><a href="<?= ROOT ?>profil/update">Modifier</a></button>
+            <button class="btn btn-danger"><a href="<?= ROOT ?>profil/delete">Supprimer</a></button>
         </div>
     </div>
 </div>

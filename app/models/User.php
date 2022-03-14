@@ -146,12 +146,9 @@ class User
 
                 if ($result->isAdmin && $allowed[0] === 'admin') {
                     return $result;
-                } 
-                elseif($allowed[1] === "customer")
-                {
+                } elseif ($allowed[1] === "customer") {
                     return $result;
-                }
-                else {
+                } else {
                     header("Location: " . "login");
                     die;
                 }
@@ -212,5 +209,95 @@ class User
         $query = "SELECT * FROM member WHERE pseudoMember = :pseudoMember limit 1";
         $arr['pseudoMember'] = $data['pseudoMember'];
         return $db->read($query, $arr);
+    }
+
+
+
+    public function updateUser($idMember)
+    {
+        $db = Database::newInstance();
+
+        $data = array();
+        $data['nameMember'] = validateData($_POST['name']);
+        $data['firstnameMember'] = validateData($_POST['firstname']);
+        $data['pseudoMember'] = validateData($_POST['pseudo']);
+        $data['emailMember'] = validateData($_POST['email']);
+        $data['cityMember'] = validateData($_POST['city']);
+        $data['postalCodeMember'] = validateData($_POST['postalCode']);
+        $data['adressMember'] = validateData($_POST['adress']);
+        $data['passwordMember'] = $_POST['password'];
+        $data['idMember'] = $idMember;
+        $password2 = $_POST['password2'];
+
+        // check the datas 
+        if (empty($data['nameMember']) || !preg_match("/^[a-zA-Z-' ]*$/", $data['nameMember'])) {
+            $this->error .= "Veuillez entrez un nom valide. <br>";
+        }
+
+        if (empty($data['firstnameMember']) || !preg_match("/^[a-zA-Z-' ]*$/", $data['nameMember'])) {
+            $this->error .= "Veuillez entrez un prénom valide. <br>";
+        }
+
+        if (empty($data['pseudoMember'])) {
+            $this->error .= "Veuillez entrez un pseudo valide. <br>";
+        }
+
+        if (empty($data['emailMember']) || (!filter_var($data['emailMember'], FILTER_VALIDATE_EMAIL))) {
+            $this->error .= "Veuillez entrez un email valide. <br>";
+        }
+
+        if (empty($data['postalCodeMember']) || !preg_match("/^[0-9]{5}$/", $data['postalCodeMember'])) {
+            $this->error .= "Veuillez entrez un code postal valide. <br>";
+        }
+
+        if (empty($data['cityMember'])) {
+            $this->error .= "Veuillez entrez une ville valide. <br>";
+        }
+
+        if (empty($data['adressMember'])) {
+            $this->error .= "Veuillez entrez une adresse valide. <br>";
+        }
+
+        if ($data['passwordMember'] !== $password2) {
+            $this->error .= "Les mots de passes ne correspondent pas. <br>";
+        }
+
+        if (strlen($data['passwordMember']) < 4) {
+            $this->error .= "Le mot de passe doit être long de 4 caractères au minimun. <br>";
+        }
+
+        // $checkEmail = $this->checkEmail($data);
+
+        // if (is_array($checkEmail)) {
+        //     $this->error .= "L'email existe déjà, veuillez en renseigner un autre. <br>";
+        // }
+
+        // $checkPseudo = $this->checkPseudo($data);
+
+        // if (is_array($checkPseudo)) {
+        //     $this->error .= "Le pseudo existe déjà, veuillez en renseigner un autre. <br>";
+        // }
+
+        if ($this->error == "") {
+            $data['passwordMember'] = hash('sha1', $data['passwordMember']);
+
+
+            $query = "UPDATE member SET pseudoMember = :pseudoMember, nameMember = :nameMember, firstnameMember = :firstnameMember, emailMember = :emailMember, postalCodeMember = :postalCodeMember, cityMember = :cityMember, adressMember = :adressMember, passwordMember = :passwordMember WHERE idMember = :idMember";
+            $result = $db->write($query, $data);
+            if ($result) {
+                header("Location: " . ROOT . "profil");
+                die;
+            }
+        }
+
+        $_SESSION['error'] = $this->error;
+    }
+
+    public function deleteUser($idMember)
+    {
+        $db = Database::newInstance();
+
+        $db->write("DELETE FROM member WHERE idMember = $idMember");
+        header("Location: ".ROOT."login");
     }
 }
