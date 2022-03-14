@@ -31,6 +31,8 @@ class CommandModel
         $idCommand =  $db->getLastInsertId();
         $this->createDetailsCommand($idCommand);
 
+        return $idCommand;
+
         //  for($i = 0; $i < count($_SESSION['panier']['id_produit']); $i++)
         // {
         //     executeRequete("INSERT INTO details_commande (id_commande, id_produit, quantite, prix) VALUES ($id_commande, " . $_SESSION['panier']['id_produit'][$i] . "," . $_SESSION['panier']['quantite'][$i] . "," . $_SESSION['panier']['prix'][$i] . ")");

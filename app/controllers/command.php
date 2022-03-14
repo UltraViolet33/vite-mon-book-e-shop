@@ -19,11 +19,14 @@ class Command extends Controller
         }
 
         $command = $this->loadModel('CommandModel');
-        $command->create();
+        $idCommand = $command->create();
 
+            unset($_SESSION['cart']);
 
+            $_SESSION['idCommand'] = $idCommand;
+        echo $idCommand;
 
-        echo "commadn";
+        header("location:" . ROOT . "cart");
 
         // $data['pageTitle'] = "Produits";
         // $this->view("products", $data);

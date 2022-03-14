@@ -6,6 +6,12 @@
         </div>
     </div>
 
+    <?php
+
+    if (isset($_SESSION['idCommand'])) {
+        echo "Votre numéro de command : " . $_SESSION['idCommand'];
+    }
+    ?>
 
     <table class="table">
         <thead>
@@ -20,6 +26,7 @@
 
             <?php
             echo $cart;
+
             ?>
 
 
