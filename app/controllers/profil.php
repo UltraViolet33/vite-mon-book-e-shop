@@ -12,7 +12,7 @@ class Profil extends Controller
     public function index()
     {
         $user = $this->loadModel('User');
-        $userData = $user->checkLogin();
+        $userData = $user->checkLogin(['admin', 'customer']);
         if (is_object($userData)) {
             $data['userData'] = $userData;
         }
