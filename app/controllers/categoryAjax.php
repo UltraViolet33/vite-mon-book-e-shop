@@ -25,12 +25,14 @@ class CategoryAjax extends Controller
 
             if ($data->dataType == "addCategory") {
                 $this->createCategory($data);
+            } elseif (is_object($data) && isset($data->dataType)) {
+                $this->deleteCategory($data);
             }
         }
     }
 
 
-    /**
+    /*
      * createCategory
      * insert a category in the BDD and send back the message error or success
      * @param  mixed $data
@@ -52,6 +54,27 @@ class CategoryAjax extends Controller
             $arr['messageType'] = "error";
             $arr['data'] = "";
             $arr['dataType'] = "addCategory";
+            echo json_encode($arr);
+        }
+    }
+
+    private function deleteCategory($data)
+    {
+
+        $result = $this->category->delete($data->data);
+        if ($result) {
+            $arr['message'] = "Supression de la catégorie OK";
+            $arr['messageType'] = "info";
+            $categories = $this->category->getAll();
+            $arr['data'] = $this->category->makeTable($categories);
+            $arr['dataType'] = "deleteCategory";
+            echo json_encode($arr);
+        } else {
+            $arr['message'] = $_SESSION['error'];
+            unset($_SESSION['error']);
+            $arr['messageType'] = "error";
+            $arr['data'] = "";
+            $arr['dataType'] = "deleteCategory";
             echo json_encode($arr);
         }
     }

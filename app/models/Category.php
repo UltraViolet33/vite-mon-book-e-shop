@@ -28,6 +28,22 @@ class Category
         return false;
     }
 
+    public function delete($idCategory)
+    {
+        $db = Database::newInstance();
+
+        if (isset($idCategory)) {
+            $check = $db->write("DELETE FROM category WHERE idCategory = $idCategory");
+
+            if ($check) {
+                return true;
+            } else {
+                $_SESSION['error'] = "Une erreur est survenue.";
+            }
+            return false;
+        }
+    }
+
     /**
      * getAll
      * select all the categories from the database
@@ -36,7 +52,7 @@ class Category
     public function getAll()
     {
         $db = Database::newInstance();
-        $data = $db->read("SELECT * FROM category ORDER BY idCategory ASC");
+        $data = $db->read("SELECT * FROM category ORDER BY idCategory DESC");
         return $data;
     }
 
@@ -52,11 +68,13 @@ class Category
         $tableHTML = "";
         if (is_array($categories)) {
             foreach ($categories as $category) {
+                $args = $category->idCategory.",'".$category->nameCategory."'";
+
                 $tableHTML .= '<tr>
                             <th scope="row">' . $category->idCategory . '</th>
                             <td>' . $category->nameCategory . '</td>
-                            <td><button class="btn btn-primary">Modifier</button></td>
-                            <td><button class="btn btn-warning">Supprimer</button></td>
+                            <td><button class="btn btn-primary" onclick="displayEditForm('.$args .')">Modifier</button></td>
+                            <td><button class="btn btn-warning" onclick="deleteCategory(' . $category->idCategory . '">Supprimer</button></td>
                         </tr>';
             }
         }
