@@ -155,8 +155,8 @@ class Product
                           
                             <td><img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" ></td>
                             <td>' . $product->idCategoryProduct . '</td>
-                            <td><button class="btn btn-primary">Modifier</button></td>
-                            <td><button class="btn btn-warning">Supprimer</button></td>
+                            <td><button class="btn btn-primary"><a href=products/update/' . $product->idProduct . '>Modifier</a></button></td>
+                            <td><button class="btn btn-warning"><a href=deleteProduct/' . $product->idProduct . '>Supprimer</a></button></td>
                         </tr>';
             }
         }
@@ -189,5 +189,76 @@ class Product
             }
         }
         return $html;
+    }
+
+    public function deleteProduct($idProduct)
+    {
+        $db = Database::newInstance();
+
+        $db->write("DELETE FROM product WHERE idProduct = $idProduct");
+        header("Location: " . ROOT . "admin/products");
+    }
+
+    public function updateProduct($idProduct)
+    {
+        $db = Database::newInstance();
+        $data = array();
+
+        $data['nameProduct'] = validateData($_POST['name']);
+        $data['descriptionProduct'] = validateData($_POST['description']);
+        $data['priceProduct'] = validateData($_POST['price']);
+        $data['priceProduct'] = (int)$data['priceProduct'];
+        $data['stockProduct'] = validateData($_POST['stock']);
+        $data['stockProduct'] = (int)$data['stockProduct'];
+        $data['idCategoryProduct'] = validateData($_POST['category']);
+        $data['idCategoryProduct'] = (int)$data['idCategoryProduct'];
+
+        $data['imageProduct'] = $_FILES['image']['name'];
+
+        if (empty($data['nameProduct'])) {
+            $this->error .= "Veuillez entrez un nom de produit valide. <br>";
+        }
+
+        if (empty($data['descriptionProduct'])) {
+            $this->error .= "Veuillez entrez une description de produit. <br>";
+        }
+
+        if (empty($data['priceProduct'])) {
+            $this->error .= "Veuillez entrez un prix de produit valide. <br>";
+        }
+
+        if (empty($data['stockProduct'])) {
+            $this->error .= "Veuillez entrez un stock de produit valide. <br>";
+        }
+
+        if (empty($data['idCategoryProduct'])) {
+            $this->error .= "Veuillez entrez une catégorie de produit. <br>";
+        }
+
+        if (empty($data['imageProduct'])) {
+            $this->error .= "Veuillez choisir une image de produit. <br>";
+        }
+
+        if ($this->error == "") {
+
+            $imageBDD = "";
+            $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
+            $imageBDD = ASSETS . "img/products/" . $nameImage;
+
+            $data['imageProduct'] = $nameImage;
+            $data['idProduct'] =  (int)$idProduct;
+
+            $directory = $_SERVER['DOCUMENT_ROOT'] . ROOT_PATH . "public/assets/img/products/" . $nameImage;
+            copy($_FILES['image']['tmp_name'], $directory);
+
+            $query = "UPDATE product SET nameProduct = :nameProduct, descriptionProduct = :descriptionProduct, imageProduct = :imageProduct, stockProduct = :stockProduct, priceProduct = :priceProduct, idCategoryProduct = :idCategoryProduct WHERE idProduct = :idProduct";
+
+            $result = $db->write($query, $data);
+            if ($result) {
+                header("Location: " . ROOT . "admin/products");
+                die;
+            }
+        }
+        $_SESSION['error'] = $this->error;
     }
 }

@@ -34,8 +34,6 @@ class Admin extends Controller
             $data['userData'] = $userData;
         }
 
-   
-
         // get all the categories and the HTML table
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
@@ -64,11 +62,12 @@ class Admin extends Controller
 
         if ($method === "add") {
             $this->addProduct($data, $product);
+        } elseif ($method === "update") {
+            $this->updateProduct($data, $product,  $arg);
         } elseif ($method === "home") {
             // get all the products and the HTML table
             $allProducts = $product->getAllProducts();
             $tableHTML = $product->makeTable($allProducts);
-
             $data['tableHTML'] = $tableHTML;
             $data['pageTitle'] = "Admin - Products";
             $this->view("admin/products", $data);
@@ -97,5 +96,37 @@ class Admin extends Controller
         $data['categories'] = $allCategories;
         $data['pageTitle'] = "Admin - Add Product";
         $this->view("admin/addProduct", $data);
+    }
+
+    public function deleteProduct($idProduct)
+    {
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin();
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+        //get the datas about the produt
+        $product = $this->loadModel('Product');
+        $result = $product->deleteProduct($idProduct);
+    }
+
+    public function updateProduct($data, $product, $idProduct)
+    {
+        $singleProduct  = $product->getOneProduct($idProduct);
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $singleProduct  = $product->getOneProduct($idProduct);
+            $result = $product->updateProduct($singleProduct[0]->idProduct);
+        }
+
+        // //get the datas about the produt
+        $category = $this->loadModel('Category');
+        $allCategories = $category->getAll();
+        $selectHTML = $product->makeSelectCategories($allCategories);
+        $data['selectHTML'] = $selectHTML;
+        $data['categories'] = $allCategories;
+        $data['product'] = $singleProduct[0];
+        $data['pageTitle'] = "Admin - update Product";
+        $this->view("admin/updateProduct", $data);
     }
 }
