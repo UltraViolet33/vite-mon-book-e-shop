@@ -25,8 +25,10 @@ class CategoryAjax extends Controller
 
             if ($data->dataType == "addCategory") {
                 $this->createCategory($data);
-            } elseif (is_object($data) && isset($data->dataType)) {
+            } elseif ($data->dataType == "deleteCategory") {
                 $this->deleteCategory($data);
+            }elseif($data->dataType == "updateCategory"){
+                 $this->updateCategory($data->idCategory, $data->nameCategory);
             }
         }
     }
@@ -77,5 +79,33 @@ class CategoryAjax extends Controller
             $arr['dataType'] = "deleteCategory";
             echo json_encode($arr);
         }
+    }
+
+    private function updateCategory($idCategory, $nameCategory)
+    {
+
+         $result = $this->category->updateCategory($idCategory, $nameCategory);
+
+    if($result)
+    {
+        $arr['message'] = "Modification de la catégorie OK";
+        $arr['messageType'] = "info";
+        $categories = $this->category->getAll();
+        $arr['data'] = $this->category->makeTable($categories);
+        $arr['dataType'] = "updateCategory";
+        echo json_encode($arr);
+    } else {
+        $arr['message'] = $_SESSION['error'];
+        unset($_SESSION['error']);
+        $arr['messageType'] = "error";
+        $arr['data'] = "";
+        $arr['dataType'] = "updateCategory";
+        echo json_encode($arr);
+    }
+        
+          
+      
+      
+
     }
 }

@@ -44,6 +44,27 @@ class Category
         }
     }
 
+    public function updateCategory($idCategory, $nameCategory)
+    {
+        $db = Database::newInstance();
+
+        if(isset($idCategory) && isset($nameCategory))
+        {
+            $query = "UPDATE  category SET nameCategory = :nameCategory WHERE idCategory = :idCategory";
+            $arr['idCategory'] = $idCategory;
+            $arr['nameCategory'] = $nameCategory;
+
+            $check = $db->write($query, $arr);
+
+            if ($check) {
+                return true;
+            } else {
+                $_SESSION['error'] = "Une erreur est survenue.";
+            }
+            return false;
+        }
+    }
+
     /**
      * getAll
      * select all the categories from the database
@@ -74,7 +95,7 @@ class Category
                             <th scope="row">' . $category->idCategory . '</th>
                             <td>' . $category->nameCategory . '</td>
                             <td><button class="btn btn-primary" onclick="displayEditForm('.$args .')">Modifier</button></td>
-                            <td><button class="btn btn-warning" onclick="deleteCategory(' . $category->idCategory . '">Supprimer</button></td>
+                            <td><button class="btn btn-warning" onclick="deleteCategory(' . $category->idCategory . ')">Supprimer</button></td>
                         </tr>';
             }
         }

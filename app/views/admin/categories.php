@@ -7,7 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-8">
-            <button class="btn btn-primary"  id="btnSubmit" onclick="displayForm()">Ajouter Catégorie</button>
+            <button class="btn btn-primary" id="btnSubmit" onclick="displayForm()">Ajouter Catégorie</button>
         </div>
         <div class="col-8 formCat">
             <form action="" method="POST">
@@ -26,7 +26,7 @@
                     <label for="name" class="form-label">Nouveau nom de la catégorie : </label>
                     <input id="inputEditCat" type="text" name='name' class="form-control">
                 </div>
-                <button type="button" onclick="collectDataCat()" class="btn btn-primary">Valider</button>
+                <button type="button" id="btnEditCat" onclick="collectDataEditCat()" class="btn btn-primary">Valider</button>
                 <button type="button" onclick="displayEditForm()" class="btn btn-warning">Fermer</button>
             </form>
         </div>
@@ -62,6 +62,7 @@
      * @return void
      */
     function sendDataAjax(data = {}) {
+        console.log('egklj');
         const ajax = new XMLHttpRequest();
         ajax.onload = function() {
             //alert(ajax.responseText);
@@ -102,6 +103,9 @@
                     tableCategories_tbody.innerHTML = resultObj.data;
                 }
 
+                const tableCategories_tbody = document.querySelector('#tableCategories');
+                tableCategories_tbody.innerHTML = resultObj.data;
+
             }
 
         }
@@ -130,16 +134,36 @@
         const formCat_div = document.querySelector(".formEditCat");
         formCat_div.classList.toggle("show");
 
-        if(idCategory !== null && nameCategory !== null)
-        {
+        if (idCategory !== null && nameCategory !== null) {
             const inputEditCat_input = document.getElementById('inputEditCat');
             inputEditCat_input.value = nameCategory;
 
             inputEditCat_input.setAttribute('idCat', idCategory);
+            const btnSubmit = document.getElementById('btnEditCat');
+
 
         }
     }
 
-   
+    function collectDataEditCat() {
+
+        const inputEditCat_input = document.getElementById('inputEditCat');
+        const idCategory = inputEditCat_input.getAttribute("idCat");
+
+
+        const newNameCategory = inputEditCat_input.value;
+
+
+        const objData = {
+            idCategory: idCategory,
+            nameCategory: newNameCategory,
+            dataType: "updateCategory",
+        };
+
+        console.log(objData);
+
+        sendDataAjax(objData);
+
+    }
 </script>
 <?php $this->view("inc/footer", $data); ?>
