@@ -27,8 +27,8 @@ class CategoryAjax extends Controller
                 $this->createCategory($data);
             } elseif ($data->dataType == "deleteCategory") {
                 $this->deleteCategory($data);
-            }elseif($data->dataType == "updateCategory"){
-                 $this->updateCategory($data->idCategory, $data->nameCategory);
+            } elseif ($data->dataType == "updateCategory") {
+                $this->updateCategory($data->idCategory, $data->nameCategory);
             }
         }
     }
@@ -59,7 +59,13 @@ class CategoryAjax extends Controller
             echo json_encode($arr);
         }
     }
-
+    
+    /**
+     * deleteCategory
+     * delete one category in the BDD
+     * @param  object $data
+     * @return void
+     */
     private function deleteCategory($data)
     {
 
@@ -80,32 +86,32 @@ class CategoryAjax extends Controller
             echo json_encode($arr);
         }
     }
-
+    
+    /**
+     * updateCategory
+     * update the name of a category in the BDD
+     * @param  int $idCategory
+     * @param  string $nameCategory
+     * @return void
+     */
     private function updateCategory($idCategory, $nameCategory)
     {
+        $result = $this->category->updateCategory($idCategory, $nameCategory);
 
-         $result = $this->category->updateCategory($idCategory, $nameCategory);
-
-    if($result)
-    {
-        $arr['message'] = "Modification de la catégorie OK";
-        $arr['messageType'] = "info";
-        $categories = $this->category->getAll();
-        $arr['data'] = $this->category->makeTable($categories);
-        $arr['dataType'] = "updateCategory";
-        echo json_encode($arr);
-    } else {
-        $arr['message'] = $_SESSION['error'];
-        unset($_SESSION['error']);
-        $arr['messageType'] = "error";
-        $arr['data'] = "";
-        $arr['dataType'] = "updateCategory";
-        echo json_encode($arr);
-    }
-        
-          
-      
-      
-
+        if ($result) {
+            $arr['message'] = "Modification de la catégorie OK";
+            $arr['messageType'] = "info";
+            $categories = $this->category->getAll();
+            $arr['data'] = $this->category->makeTable($categories);
+            $arr['dataType'] = "updateCategory";
+            echo json_encode($arr);
+        } else {
+            $arr['message'] = $_SESSION['error'];
+            unset($_SESSION['error']);
+            $arr['messageType'] = "error";
+            $arr['data'] = "";
+            $arr['dataType'] = "updateCategory";
+            echo json_encode($arr);
+        }
     }
 }

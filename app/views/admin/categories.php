@@ -69,12 +69,6 @@
             handleResultAjax(ajax.responseText);
         };
 
-        // ajax.addEventListener('readystatechange', function() {
-        //     if (ajax.readyState == 4 && ajax.status == 200) {
-        //         alert(ajax.responseText);
-        //     }
-        // });
-
         ajax.open("POST", "<?= ROOT ?>categoryAjax", true);
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.send(JSON.stringify(data));
@@ -102,25 +96,18 @@
                     const tableCategories_tbody = document.querySelector('#tableCategories');
                     tableCategories_tbody.innerHTML = resultObj.data;
                 }
-
                 const tableCategories_tbody = document.querySelector('#tableCategories');
                 tableCategories_tbody.innerHTML = resultObj.data;
-
             }
-
         }
     }
 
     function deleteCategory(idCategory) {
-        console.log(idCategory);
-
         data = idCategory;
-
         const objData = {
             data: data,
             dataType: "deleteCategory",
         };
-
         sendDataAjax(objData);
     }
 
@@ -130,40 +117,28 @@
     }
 
     function displayEditForm(idCategory = null, nameCategory = null) {
-
         const formCat_div = document.querySelector(".formEditCat");
         formCat_div.classList.toggle("show");
 
         if (idCategory !== null && nameCategory !== null) {
             const inputEditCat_input = document.getElementById('inputEditCat');
             inputEditCat_input.value = nameCategory;
-
             inputEditCat_input.setAttribute('idCat', idCategory);
             const btnSubmit = document.getElementById('btnEditCat');
-
-
         }
     }
 
     function collectDataEditCat() {
-
         const inputEditCat_input = document.getElementById('inputEditCat');
         const idCategory = inputEditCat_input.getAttribute("idCat");
-
-
         const newNameCategory = inputEditCat_input.value;
-
 
         const objData = {
             idCategory: idCategory,
             nameCategory: newNameCategory,
             dataType: "updateCategory",
         };
-
-        console.log(objData);
-
         sendDataAjax(objData);
-
     }
 </script>
 <?php $this->view("inc/footer", $data); ?>

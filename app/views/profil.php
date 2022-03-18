@@ -5,7 +5,6 @@
             <h1 class="">Informations Profil <?= $data['userData']->firstnameMember ?> <?= $data['userData']->nameMember ?> </h1>
         </div>
     </div>
-
     <div class="row justify-content-center">
         <div class="offset-2 col-4 infos">
             <h3>Informations générales</h3>

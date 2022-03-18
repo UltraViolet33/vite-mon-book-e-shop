@@ -212,7 +212,13 @@ class User
     }
 
 
-
+    
+    /**
+     * updateUser
+     * update the user data in the BDD
+     * @param  int $idMember
+     * @return void
+     */
     public function updateUser($idMember)
     {
         $db = Database::newInstance();
@@ -266,21 +272,8 @@ class User
             $this->error .= "Le mot de passe doit être long de 4 caractères au minimun. <br>";
         }
 
-        // $checkEmail = $this->checkEmail($data);
-
-        // if (is_array($checkEmail)) {
-        //     $this->error .= "L'email existe déjà, veuillez en renseigner un autre. <br>";
-        // }
-
-        // $checkPseudo = $this->checkPseudo($data);
-
-        // if (is_array($checkPseudo)) {
-        //     $this->error .= "Le pseudo existe déjà, veuillez en renseigner un autre. <br>";
-        // }
-
         if ($this->error == "") {
             $data['passwordMember'] = hash('sha1', $data['passwordMember']);
-
 
             $query = "UPDATE member SET pseudoMember = :pseudoMember, nameMember = :nameMember, firstnameMember = :firstnameMember, emailMember = :emailMember, postalCodeMember = :postalCodeMember, cityMember = :cityMember, adressMember = :adressMember, passwordMember = :passwordMember WHERE idMember = :idMember";
             $result = $db->write($query, $data);
@@ -292,7 +285,13 @@ class User
 
         $_SESSION['error'] = $this->error;
     }
-
+    
+    /**
+     * deleteUser
+     * delete one user in the BDD
+     * @param  int $idMember
+     * @return void
+     */
     public function deleteUser($idMember)
     {
         $db = Database::newInstance();

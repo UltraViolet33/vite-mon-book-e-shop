@@ -190,7 +190,13 @@ class Product
         }
         return $html;
     }
-
+    
+    /**
+     * deleteProduct
+     * delete one product in the BDD
+     * @param  int $idProduct
+     * @return void
+     */
     public function deleteProduct($idProduct)
     {
         $db = Database::newInstance();
@@ -198,7 +204,13 @@ class Product
         $db->write("DELETE FROM product WHERE idProduct = $idProduct");
         header("Location: " . ROOT . "admin/products");
     }
-
+    
+    /**
+     * updateProduct
+     * update one product in the BDD
+     * @param  int $idProduct
+     * @return void
+     */
     public function updateProduct($idProduct)
     {
         $db = Database::newInstance();

@@ -28,6 +28,12 @@ class Category
         return false;
     }
 
+    /**
+     * delete
+     * delete one category in the BDD
+     * @param  int $idCategory
+     * @return void
+     */
     public function delete($idCategory)
     {
         $db = Database::newInstance();
@@ -44,12 +50,18 @@ class Category
         }
     }
 
+    /**
+     * updateCategory
+     * update one category in the BDD
+     * @param  int $idCategory
+     * @param  string $nameCategory
+     * @return void
+     */
     public function updateCategory($idCategory, $nameCategory)
     {
         $db = Database::newInstance();
 
-        if(isset($idCategory) && isset($nameCategory))
-        {
+        if (isset($idCategory) && isset($nameCategory)) {
             $query = "UPDATE  category SET nameCategory = :nameCategory WHERE idCategory = :idCategory";
             $arr['idCategory'] = $idCategory;
             $arr['nameCategory'] = $nameCategory;
@@ -89,12 +101,12 @@ class Category
         $tableHTML = "";
         if (is_array($categories)) {
             foreach ($categories as $category) {
-                $args = $category->idCategory.",'".$category->nameCategory."'";
+                $args = $category->idCategory . ",'" . $category->nameCategory . "'";
 
                 $tableHTML .= '<tr>
                             <th scope="row">' . $category->idCategory . '</th>
                             <td>' . $category->nameCategory . '</td>
-                            <td><button class="btn btn-primary" onclick="displayEditForm('.$args .')">Modifier</button></td>
+                            <td><button class="btn btn-primary" onclick="displayEditForm(' . $args . ')">Modifier</button></td>
                             <td><button class="btn btn-warning" onclick="deleteCategory(' . $category->idCategory . ')">Supprimer</button></td>
                         </tr>';
             }

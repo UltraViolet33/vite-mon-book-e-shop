@@ -97,7 +97,13 @@ class Admin extends Controller
         $data['pageTitle'] = "Admin - Add Product";
         $this->view("admin/addProduct", $data);
     }
-
+    
+    /**
+     * deleteProduct
+     * delete one product in the BDD  
+     * @param  int $idProduct
+     * @return void
+     */
     public function deleteProduct($idProduct)
     {
         $user = $this->loadModel('User');
@@ -108,18 +114,27 @@ class Admin extends Controller
         }
         //get the datas about the produt
         $product = $this->loadModel('Product');
-        $result = $product->deleteProduct($idProduct);
+        $product->deleteProduct($idProduct);
     }
-
+    
+    /**
+     * updateProduct
+     * Update one product in the BDD
+     * @param  arrays $data
+     * @param  object $product
+     * @param  int $idProduct
+     * @return view admin/updateProduct
+     */
     public function updateProduct($data, $product, $idProduct)
     {
         $singleProduct  = $product->getOneProduct($idProduct);
+
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $singleProduct  = $product->getOneProduct($idProduct);
-            $result = $product->updateProduct($singleProduct[0]->idProduct);
+            $product->updateProduct($singleProduct[0]->idProduct);
         }
 
-        // //get the datas about the produt
+        // get the datas about the produt
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
         $selectHTML = $product->makeSelectCategories($allCategories);

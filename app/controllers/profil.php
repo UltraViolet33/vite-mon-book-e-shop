@@ -21,7 +21,12 @@ class Profil extends Controller
         $this->view('profil', $data);
     }
 
-    public function update($id)
+    /**
+     * update
+     * update the user data in the BDD
+     * @return void
+     */
+    public function update()
     {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin', 'customer']);
@@ -39,7 +44,12 @@ class Profil extends Controller
         $this->view('updateProfil', $data);
     }
 
-    public function delete($idMember)
+    /**
+     * delete
+     * delete the user in the BDD
+     * @return void
+     */
+    public function delete()
     {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin', 'customer']);
@@ -49,6 +59,5 @@ class Profil extends Controller
         }
 
         $user->deleteUser($userData->idMember);
-
     }
 }

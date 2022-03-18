@@ -5,14 +5,11 @@
             <h1 class="">Votre Panier</h1>
         </div>
     </div>
-
     <?php
-
     if (isset($_SESSION['idCommand'])) {
         echo "Votre numéro de command : " . $_SESSION['idCommand'];
     }
     ?>
-
     <table class="table">
         <thead>
             <tr>
@@ -23,22 +20,16 @@
             </tr>
         </thead>
         <tbody>
-
             <?php
             echo $cart;
-
             ?>
-
-
         </tbody>
     </table>
     <button><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>
     <?php
-
     if (isset($button)) {
         echo $button;
     }
-
     ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>

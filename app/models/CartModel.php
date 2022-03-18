@@ -2,10 +2,6 @@
 
 class CartModel
 {
-    public function __construct()
-    {
-       
-    }
 
     public function addToCart($product)
     {
