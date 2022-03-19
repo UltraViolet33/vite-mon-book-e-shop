@@ -25,7 +25,7 @@ class Cart extends Controller
         if (isset($_SESSION['cart'])) {
             $cart = $this->loadModel('CartModel');
             $html = $cart->makeHTMLCart($_SESSION['cart']);
-            $button = '<button><a href="' . ROOT . 'command">Valider</a></button>';
+            $button = '<button class="btn btn-primary"><a href="' . ROOT . 'command">Valider</a></button>';
         }
 
         $data['button'] = $button;

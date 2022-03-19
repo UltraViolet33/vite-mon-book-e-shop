@@ -14,11 +14,11 @@ main css file
   display: block;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
-.show{
+.show {
   display: block;
 }
 
@@ -29,4 +29,13 @@ button > a {
 
 textarea {
   resize: none;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+footer {
+  margin-top: auto;
 }

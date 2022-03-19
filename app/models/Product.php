@@ -164,7 +164,6 @@ class Product
         return $tableHTML;
     }
 
-
     /**
      * makeFrontProducts
      * return HTML elements for the products page Front office

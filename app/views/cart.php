@@ -25,7 +25,7 @@
             ?>
         </tbody>
     </table>
-    <button><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>
+    <button class="btn btn-danger"><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>
     <?php
     if (isset($button)) {
         echo $button;
