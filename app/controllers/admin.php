@@ -88,8 +88,6 @@ class Admin extends Controller
 
         $allCommands = $commandModel->getAllCommands();
 
-        show($allCommands);
-
         $commandsHTML = $commandModel->makeTable($allCommands);
 
         $data['commandsHTML'] = $commandsHTML;

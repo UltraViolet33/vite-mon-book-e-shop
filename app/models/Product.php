@@ -101,7 +101,8 @@ class Product
     public function getAllProducts()
     {
         $db = Database::newInstance();
-        $data = $db->read("SELECT * FROM product ORDER BY idProduct ASC");
+        $query = "SELECT * FROM product INNER JOIN category ON product.idCategoryProduct = category.idCategory";
+        $data = $db->read($query);
         return $data;
     }
 
@@ -154,7 +155,7 @@ class Product
                             <td>' . $product->stockProduct . '</td>
                           
                             <td><img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" ></td>
-                            <td>' . $product->idCategoryProduct . '</td>
+                            <td>' . $product->nameCategory . '</td>
                             <td><button class="btn btn-primary"><a href=products/update/' . $product->idProduct . '>Modifier</a></button></td>
                             <td><button class="btn btn-warning"><a href=deleteProduct/' . $product->idProduct . '>Supprimer</a></button></td>
                         </tr>';
@@ -190,7 +191,7 @@ class Product
         }
         return $html;
     }
-    
+
     /**
      * deleteProduct
      * delete one product in the BDD
@@ -204,7 +205,7 @@ class Product
         $db->write("DELETE FROM product WHERE idProduct = $idProduct");
         header("Location: " . ROOT . "admin/products");
     }
-    
+
     /**
      * updateProduct
      * update one product in the BDD
