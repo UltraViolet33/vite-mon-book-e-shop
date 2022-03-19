@@ -80,6 +80,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="<?= ROOT ?>admin/products">View Products</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<?= ROOT ?>admin/commands">View Commands</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

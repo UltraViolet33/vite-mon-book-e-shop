@@ -64,7 +64,8 @@ class Admin extends Controller
             $this->addProduct($data, $product);
         } elseif ($method === "update") {
             $this->updateProduct($data, $product,  $arg);
-        } elseif ($method === "home") {
+        } 
+        elseif ($method === "home") {
             // get all the products and the HTML table
             $allProducts = $product->getAllProducts();
             $tableHTML = $product->makeTable($allProducts);
@@ -72,6 +73,27 @@ class Admin extends Controller
             $data['pageTitle'] = "Admin - Products";
             $this->view("admin/products", $data);
         }
+    }
+
+    public function commands(){
+
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin(['admin']);
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+
+        $commandModel = $this->loadModel("CommandModel");
+
+        $allCommands = $commandModel->getAllCommands();
+
+        show($allCommands);
+
+        $commandsHTML = $commandModel->makeTable($allCommands);
+
+        $data['commandsHTML'] = $commandsHTML;
+        $this->view("admin/commands", $data);
     }
 
     /**
@@ -87,7 +109,7 @@ class Admin extends Controller
             header("Location: " . ROOT . "admin/products");
         }
 
-        //get all the categories for the select in the form addProduct
+        // get all the categories for the select in the form addProduct
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
         $selectHTML = $productModel->makeSelectCategories($allCategories);

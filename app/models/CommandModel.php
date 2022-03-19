@@ -1,6 +1,5 @@
 <?php
 
-
 class CommandModel
 {
     /**
@@ -11,7 +10,6 @@ class CommandModel
     public function create()
     {
         $db = Database::newInstance();
-
         $montant = 0;
 
         for ($i = 0; $i < count($_SESSION['cart']['price']); $i++) {
@@ -33,7 +31,7 @@ class CommandModel
         return $idCommand;
     }
 
-    
+
     /**
      * createDetailsCommand
      * insert the details of one command in the BDD
@@ -55,5 +53,41 @@ class CommandModel
 
             $check = $db->write($query, $arr);
         }
+    }
+    
+    /**
+     * getAllCommands
+     * select all commands in the BDD
+     * @return array
+     */
+    public function getAllCommands()
+    {
+        $db = Database::newInstance();
+        $result = $db->read("SELECT * FROM command ORDER BY idCommand DESC");
+        return $result;
+    }
+    
+    /**
+     * makeTable
+     * make HTML table to display commands
+     * @param  array $commands
+     * @return HTML elements
+     */
+    public function makeTable($commands)
+    {
+        $tableHTML = "";
+        if (is_array($commands)) {
+            foreach ($commands as $command) {
+                $date = date("d/m/Y H:i:s", strtotime($command->dateCommand));
+                $tableHTML .= '<tr>
+                            <th scope="row">' . $command->idCommand . '</th>
+                            <td>' . $command->idUserCommand . '</td>
+                            <td>' . $command->amountCommand . '</td>
+                            <td>' . $date . '</td>
+                            <td>' . $command->stateCommand . '</td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
     }
 }
