@@ -50,16 +50,13 @@ class Product
         }
 
         if ($this->error == "") {
-
             $imageBDD = "";
             $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
             $imageBDD = ASSETS . "img/products/" . $nameImage;
-
             $data['imageProduct'] = $nameImage;
 
             $directory = $_SERVER['DOCUMENT_ROOT'] . ROOT_PATH . "public/assets/img/products/" . $nameImage;
             copy($_FILES['image']['tmp_name'], $directory);
-
             $query = "INSERT INTO product (nameProduct, descriptionProduct, imageProduct, priceProduct, stockProduct, idCategoryProduct) 
             VALUES (:nameProduct, :descriptionProduct, :imageProduct, :priceProduct, :stockProduct, :idCategoryProduct)";
 
@@ -200,7 +197,6 @@ class Product
     public function deleteProduct($idProduct)
     {
         $db = Database::newInstance();
-
         $db->write("DELETE FROM product WHERE idProduct = $idProduct");
         header("Location: " . ROOT . "admin/products");
     }
@@ -252,11 +248,9 @@ class Product
         }
 
         if ($this->error == "") {
-
             $imageBDD = "";
             $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
             $imageBDD = ASSETS . "img/products/" . $nameImage;
-
             $data['imageProduct'] = $nameImage;
             $data['idProduct'] =  (int)$idProduct;
 
@@ -264,7 +258,6 @@ class Product
             copy($_FILES['image']['tmp_name'], $directory);
 
             $query = "UPDATE product SET nameProduct = :nameProduct, descriptionProduct = :descriptionProduct, imageProduct = :imageProduct, stockProduct = :stockProduct, priceProduct = :priceProduct, idCategoryProduct = :idCategoryProduct WHERE idProduct = :idProduct";
-
             $result = $db->write($query, $data);
             if ($result) {
                 header("Location: " . ROOT . "admin/products");

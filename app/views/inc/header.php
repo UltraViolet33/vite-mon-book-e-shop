@@ -76,7 +76,6 @@
                     </nav>
                 </div>
             </div>
-
+            <?php endif ; ?>
     </div>
     
-<?php endif; ?>

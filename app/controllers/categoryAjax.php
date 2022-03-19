@@ -33,7 +33,6 @@ class CategoryAjax extends Controller
         }
     }
 
-
     /*
      * createCategory
      * insert a category in the BDD and send back the message error or success
@@ -59,7 +58,7 @@ class CategoryAjax extends Controller
             echo json_encode($arr);
         }
     }
-    
+
     /**
      * deleteCategory
      * delete one category in the BDD
@@ -68,7 +67,6 @@ class CategoryAjax extends Controller
      */
     private function deleteCategory($data)
     {
-
         $result = $this->category->delete($data->data);
         if ($result) {
             $arr['message'] = "Supression de la catégorie OK";
@@ -86,7 +84,7 @@ class CategoryAjax extends Controller
             echo json_encode($arr);
         }
     }
-    
+
     /**
      * updateCategory
      * update the name of a category in the BDD

@@ -64,8 +64,7 @@ class Admin extends Controller
             $this->addProduct($data, $product);
         } elseif ($method === "update") {
             $this->updateProduct($data, $product,  $arg);
-        } 
-        elseif ($method === "home") {
+        } elseif ($method === "home") {
             // get all the products and the HTML table
             $allProducts = $product->getAllProducts();
             $tableHTML = $product->makeTable($allProducts);
@@ -75,8 +74,8 @@ class Admin extends Controller
         }
     }
 
-    public function commands(){
-
+    public function commands()
+    {
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(['admin']);
 
@@ -85,11 +84,8 @@ class Admin extends Controller
         }
 
         $commandModel = $this->loadModel("CommandModel");
-
         $allCommands = $commandModel->getAllCommands();
-
         $commandsHTML = $commandModel->makeTable($allCommands);
-
         $data['commandsHTML'] = $commandsHTML;
         $this->view("admin/commands", $data);
     }
@@ -117,7 +113,7 @@ class Admin extends Controller
         $data['pageTitle'] = "Admin - Add Product";
         $this->view("admin/addProduct", $data);
     }
-    
+
     /**
      * deleteProduct
      * delete one product in the BDD  
@@ -136,7 +132,7 @@ class Admin extends Controller
         $product = $this->loadModel('Product');
         $product->deleteProduct($idProduct);
     }
-    
+
     /**
      * updateProduct
      * Update one product in the BDD

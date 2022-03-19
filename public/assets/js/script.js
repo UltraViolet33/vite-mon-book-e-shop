@@ -1,4 +1,3 @@
-
 /**
  * collectDataCat
  * get the input of add cat form

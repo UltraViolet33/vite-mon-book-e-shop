@@ -5,7 +5,6 @@
             <h1 class="text-center">Commands - Admin</h1>
         </div>
     </div>
-
     <div class="row justify-content-center">
         <div class="col-8">
             <table class="table">

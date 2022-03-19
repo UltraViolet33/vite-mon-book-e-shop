@@ -5,7 +5,6 @@
             <h1 class="text-center">Admin</h1>
         </div>
     </div>
-
     <div class="row justify-content-center">
         <div class="col-6">
             <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/categories">View Categories</a></button>

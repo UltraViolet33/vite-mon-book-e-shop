@@ -4,7 +4,6 @@ require_once('../app/core/controller.php');
 
 class Cart extends Controller
 {
-
     /**
      * index
      * Load the User model and the cart view
@@ -47,7 +46,6 @@ class Cart extends Controller
         $product = $productModel->getOneProduct($idProduct);
         $cart = $this->loadModel('CartModel');
         $cart->addToCart($product[0]);
-        //show($_SESSION['cart']);
         header("location:" . ROOT . "cart");
     }
 

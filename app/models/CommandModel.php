@@ -20,17 +20,14 @@ class CommandModel
         $arr['amountCommand'] = $montant;
         $arr['stateCommand'] = "En cours de traitement";
 
-
         $query = "INSERT INTO command (idUserCommand, amountCommand, dateCommand, stateCommand) 
              VALUES (:idUserCommand, :amountCommand, NOW(), :stateCommand)";
         $check = $db->write($query, $arr);
 
         $idCommand =  $db->getLastInsertId();
         $this->createDetailsCommand($idCommand);
-
         return $idCommand;
     }
-
 
     /**
      * createDetailsCommand

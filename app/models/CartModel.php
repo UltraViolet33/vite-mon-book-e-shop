@@ -2,7 +2,6 @@
 
 class CartModel
 {
-
     public function addToCart($product)
     {
         if(!isset($_SESSION['cart']))

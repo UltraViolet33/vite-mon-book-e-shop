@@ -40,7 +40,6 @@ class Database
         return $instance = new self();
     }
 
-
     /**
      * read
      * read on the BDD
@@ -52,14 +51,11 @@ class Database
         $result = $statement->execute($data);
 
         if ($result) {
-
             $data = $statement->fetchAll(PDO::FETCH_OBJ);
-
             if (is_array($data) && count($data) > 0) {
                 return $data;
             }
         }
-
         return false;
     }
 
@@ -76,7 +72,6 @@ class Database
         if ($result) {
             return true;
         }
-
         return false;
     }
 

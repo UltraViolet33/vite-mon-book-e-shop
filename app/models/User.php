@@ -211,8 +211,6 @@ class User
         return $db->read($query, $arr);
     }
 
-
-    
     /**
      * updateUser
      * update the user data in the BDD
@@ -282,7 +280,6 @@ class User
                 die;
             }
         }
-
         $_SESSION['error'] = $this->error;
     }
     
@@ -295,7 +292,6 @@ class User
     public function deleteUser($idMember)
     {
         $db = Database::newInstance();
-
         $db->write("DELETE FROM member WHERE idMember = $idMember");
         header("Location: ".ROOT."login");
     }

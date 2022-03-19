@@ -19,7 +19,6 @@
                 <button type="button" onclick="displayForm()" class="btn btn-warning">Fermer</button>
             </form>
         </div>
-
         <div class="col-8 formEditCat hide">
             <form action="" method="POST">
                 <div class="mb-3">
@@ -30,8 +29,6 @@
                 <button type="button" onclick="displayEditForm()" class="btn btn-warning">Fermer</button>
             </form>
         </div>
-
-
         <div class="row justify-content-center">
             <div class="col-8">
                 <table class="table">
@@ -72,7 +69,6 @@
         ajax.open("POST", "<?= ROOT ?>categoryAjax", true);
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.send(JSON.stringify(data));
-
     }
 
     /**
