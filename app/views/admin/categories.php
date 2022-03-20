@@ -50,6 +50,8 @@
             </div>
         </div>
     </div>
+
+    <button id="click"></button>
 </div>
 <script>
     /**
@@ -135,6 +137,27 @@
             dataType: "updateCategory",
         };
         sendDataAjax(objData);
+    }
+
+    function collectDataCat() {
+        const categoryAdd_input = document.getElementById("inputAddCat");
+
+        if (
+            categoryAdd_input.value.trim() == "" ||
+            !isNaN(categoryAdd_input.value.trim())
+        ) {
+            alert("Entrez un nom de categorie valide !");
+        } else {
+            const data = categoryAdd_input.value.trim();
+            console.log(data);
+            const objData = {
+                data: data,
+                dataType: "addCategory",
+            };
+            categoryAdd_input.value = "";
+            console.table(objData);
+            sendDataAjax(objData);
+        }
     }
 </script>
 <?php $this->view("inc/footer", $data); ?>
