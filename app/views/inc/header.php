@@ -70,12 +70,14 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="<?= ROOT ?>admin/commands">View Commands</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<?= ROOT ?>admin/users">View Users</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </nav>
                 </div>
             </div>
-            <?php endif ; ?>
+        <?php endif; ?>
     </div>
-    

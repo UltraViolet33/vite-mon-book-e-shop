@@ -160,4 +160,64 @@ class Admin extends Controller
         $data['pageTitle'] = "Admin - update Product";
         $this->view("admin/updateProduct", $data);
     }
+
+    /**
+     * users
+     * read and display all the users
+     * @return view admin/users
+     */
+    public function users($method = false, $arg = "")
+    {
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin();
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+
+        if ($method === "viewAdmins") {
+            $this->viewAdmins($data, $user);
+            echo "admins";
+        } elseif ($method === "viewCustomers") {
+            $this->viewCustomers($data, $user);
+        } elseif ($method === "home") {
+            $allUsers = $user->getAllUsers();
+            $usersHTML = $user->makeTableUsers($allUsers);
+            $data['users'] = $usersHTML;
+            $data['pageTitle'] = "Admin - Users";
+            $this->view("admin/users", $data);
+        }
+    }
+    
+    /**
+     * viewAdmins
+     * display all admins users
+     * @param  array $data
+     * @param  object $user
+     * @return view admin/users
+     */
+    public function viewAdmins($data, $user)
+    {
+        $allAdmins = $user->getAllAdmins();
+        $adminsHTML = $user->makeTableUsers($allAdmins);
+        $data['users'] = $adminsHTML;
+        $data['pageTitle'] = "Admin - Views Admins";
+        $this->view("admin/users", $data);
+    }
+    
+    /**
+     * viewCustomers
+     * display all customers users
+     * @param  array $data
+     * @param  object $user
+     * @return view admin/users
+     */
+    public function viewCustomers($data, $user)
+    {
+        $allCustomers = $user->getAllCustomers();
+        $customersHTML = $user->makeTableUsers($allCustomers);
+        $data['users'] = $customersHTML;
+        $data['pageTitle'] = "Admin - Views Customers";
+        $this->view("admin/users", $data);
+    }
 }

@@ -282,7 +282,7 @@ class User
         }
         $_SESSION['error'] = $this->error;
     }
-    
+
     /**
      * deleteUser
      * delete one user in the BDD
@@ -293,6 +293,73 @@ class User
     {
         $db = Database::newInstance();
         $db->write("DELETE FROM member WHERE idMember = $idMember");
-        header("Location: ".ROOT."login");
+        header("Location: " . ROOT . "login");
+    }
+    
+    /**
+     * getAllUsers
+     * select all the users in the BDD
+     * @return array
+     */
+    public function getAllUsers()
+    {
+        $db = Database::newInstance();
+        $query = "SELECT * FROM member ORDER BY isAdmin DESC";
+        $data = $db->read($query);
+        return $data;
+    }
+    
+    /**
+     * getAllCustomers
+     * select all the customers in the BDD
+     * @return array
+     */
+    public function getAllCustomers()
+    {
+        $db = Database::newInstance();
+        $query = "SELECT * FROM member WHERE isAdmin = 0";
+        $data = $db->read($query);
+        return $data;
+    }
+
+    /**
+     * getAllAdmins
+     * select all the admins in the BDD
+     * @return array
+     */
+    public function getAllAdmins()
+    {
+        $db = Database::newInstance();
+        $query = "SELECT * FROM member WHERE isAdmin = 1";
+        $data = $db->read($query);
+        return $data;
+    }
+    
+    /**
+     * makeTableUsers
+     * make HTML table to display all the users in the admin part
+     * @param  arrays $members
+     * @return HTML 
+     */
+    public function makeTableUsers($members)
+    {
+        $tableHTML = "";
+        if (is_array($members)) {
+            foreach ($members as $member) {
+                $statut =  $member->isAdmin ? "Admin" : "Customer";
+                $tableHTML .= '<tr>
+                            <th scope="row">' . $member->idMember . '</th>
+                            <td>' . $statut . '</td>
+                            <td>' . $member->pseudoMember . '</td>
+                            <td>' . $member->nameMember . '</td>
+                            <td>' . $member->firstnameMember . '</td>
+                            <td>' . $member->emailMember . '</td>
+                            <td>' . $member->cityMember . '</td>
+                            <td>' . $member->postalCodeMember . '</td>
+                            <td>' . $member->adressMember . '</td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
     }
 }

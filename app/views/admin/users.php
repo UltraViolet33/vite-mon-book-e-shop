@@ -6,9 +6,10 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-4">
-            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/">View Admins</a></button>
-            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/">View Customers</a></button>
+        <div class="col-5">
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/">View Users</a></button>
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/viewAdmins">View Admins</a></button>
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/viewCustomers">View Customers</a></button>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -29,7 +30,7 @@
                 </thead>
                 <tbody id="tableProducts">
                     <?php
-                   echo $users;
+                    echo $users;
                     ?>
                 </tbody>
             </table>
