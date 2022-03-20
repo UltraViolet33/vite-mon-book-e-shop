@@ -1,7 +1,13 @@
 <?php
 
 class CartModel
-{
+{    
+    /**
+     * addToCart
+     * add one product to the cart
+     * @param  object $product
+     * @return void
+     */
     public function addToCart($product)
     {
         if(!isset($_SESSION['cart']))
@@ -18,12 +24,23 @@ class CartModel
         $_SESSION['cart']['quantity'][] = 1;
         $_SESSION['cart']['price'][] = $product->priceProduct;
     }
-
+    
+    /**
+     * deleteCart
+     * delete the cart
+     * @return void
+     */
     public function deleteCart()
     {
         unset($_SESSION['cart']);
     }
-
+    
+    /**
+     * makeHTMLCart
+     * make HTML table for the cart
+     * @param  array $cart
+     * @return void
+     */
     public function makeHTMLCart($cart)
     {
         $html = "";

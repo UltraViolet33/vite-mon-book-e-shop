@@ -25,8 +25,11 @@
             ?>
         </tbody>
     </table>
-    <button class="btn btn-danger"><a href="<?= ROOT ?>cart/deleteCart">Supprimer le panier</a></button>
+   
     <?php
+    if (isset($buttonValidate)) {
+        echo $buttonValidate;
+    }
     if (isset($button)) {
         echo $button;
     }

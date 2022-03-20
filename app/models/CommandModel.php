@@ -5,7 +5,6 @@ class CommandModel
     /**
      * create
      * insert one command in the BDD
-     * @return void
      */
     public function create()
     {
@@ -33,7 +32,6 @@ class CommandModel
      * createDetailsCommand
      * insert the details of one command in the BDD
      * @param  int $idCommand
-     * @return void
      */
     public function createDetailsCommand($idCommand)
     {
@@ -51,7 +49,7 @@ class CommandModel
             $check = $db->write($query, $arr);
         }
     }
-    
+
     /**
      * getAllCommands
      * select all commands in the BDD
@@ -63,7 +61,19 @@ class CommandModel
         $result = $db->read("SELECT * FROM command ORDER BY idCommand DESC");
         return $result;
     }
-    
+
+    /**
+     * getAllCommandsUser
+     * select all commands in the BDD for a user
+     * @return array
+     */
+    public function getAllCommandsUser($idMember)
+    {
+        $db = Database::getInstance();
+        $result = $db->read("SELECT * FROM command WHERE idUserCommand = $idMember");
+        return $result;
+    }
+
     /**
      * makeTable
      * make HTML table to display commands
@@ -81,6 +91,28 @@ class CommandModel
                             <td>' . $command->idUserCommand . '</td>
                             <td>' . $command->amountCommand . '</td>
                             <td>' . $date . '</td>
+                            <td>' . $command->stateCommand . '</td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
+    }
+
+    /**
+     * makeTable
+     * make HTML table to display commands
+     * @param  array $commands
+     * @return HTML elements
+     */
+    public function makeTableUser($commands)
+    {
+        $tableHTML = "";
+        if (is_array($commands)) {
+            foreach ($commands as $command) {
+                $date = date("d/m/Y H:i:s", strtotime($command->dateCommand));
+                $tableHTML .= '<tr>
+                <td>' . $date . '</td>
+                            <td>' . $command->amountCommand . '</td>
                             <td>' . $command->stateCommand . '</td>
                         </tr>';
             }

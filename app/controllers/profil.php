@@ -60,4 +60,20 @@ class Profil extends Controller
 
         $user->deleteUser($userData->idMember);
     }
+
+    public function commands()
+    {
+        $user = $this->loadModel('User');
+        $userData = $user->checkLogin(['admin', 'customer']);
+
+        if (is_object($userData)) {
+            $data['userData'] = $userData;
+        }
+
+        $command = $this->loadModel('CommandModel');
+        $allCommandsUser = $command->getAllCommandsUser($userData->idMember);
+        $commandsHTML =  $command->makeTableUser($allCommandsUser);
+        $data['commands'] = $commandsHTML;
+        $this->view('commands', $data);
+    }
 }
