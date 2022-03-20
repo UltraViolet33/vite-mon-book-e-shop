@@ -9,7 +9,7 @@ class CommandModel
      */
     public function create()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $montant = 0;
 
         for ($i = 0; $i < count($_SESSION['cart']['price']); $i++) {
@@ -37,7 +37,7 @@ class CommandModel
      */
     public function createDetailsCommand($idCommand)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
 
         for ($i = 0; $i < count($_SESSION['cart']['idProduct']); $i++) {
             $arr['idCommandDetailsCommand'] = $idCommand;
@@ -59,7 +59,7 @@ class CommandModel
      */
     public function getAllCommands()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $result = $db->read("SELECT * FROM command ORDER BY idCommand DESC");
         return $result;
     }

@@ -11,7 +11,7 @@ class Product
      */
     public function create()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $data = array();
 
         $data['nameProduct'] = validateData($_POST['name']);
@@ -97,7 +97,7 @@ class Product
      */
     public function getAllProducts()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM product INNER JOIN category ON product.idCategoryProduct = category.idCategory";
         $data = $db->read($query);
         return $data;
@@ -112,7 +112,7 @@ class Product
     public function getOneProduct($idProduct)
     {
         $arr['idProduct'] = $idProduct;
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM product WHERE idProduct = :idProduct";
         $data = $db->read($query, $arr);
         return $data;
@@ -196,7 +196,7 @@ class Product
      */
     public function deleteProduct($idProduct)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $db->write("DELETE FROM product WHERE idProduct = $idProduct");
         header("Location: " . ROOT . "admin/products");
     }
@@ -209,7 +209,7 @@ class Product
      */
     public function updateProduct($idProduct)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $data = array();
 
         $data['nameProduct'] = validateData($_POST['name']);

@@ -11,7 +11,10 @@ class User
      */
     public function signUp()
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
+
+        
 
         $data = array();
         $data['nameMember'] = validateData($_POST['name']);
@@ -95,8 +98,8 @@ class User
      */
     public function login()
     {
-        $db = Database::newInstance();
-
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
         $data = array();
         $data['emailMember'] = validateData($_POST['email']);
         $data['passwordMember'] = validateData($_POST['password']);
@@ -134,7 +137,8 @@ class User
      */
     public function checkLogin($allowed = array())
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
 
         if (count($allowed) > 0) {
             $arr['idMember'] = $_SESSION['idMember'];
@@ -191,7 +195,8 @@ class User
      */
     private function checkEmail($data)
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE emailMember = :emailMember limit 1";
         $arr['emailMember'] = $data['emailMember'];
         return $db->read($query, $arr);
@@ -205,7 +210,8 @@ class User
      */
     private function checkPseudo($data)
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE pseudoMember = :pseudoMember limit 1";
         $arr['pseudoMember'] = $data['pseudoMember'];
         return $db->read($query, $arr);
@@ -219,7 +225,8 @@ class User
      */
     public function updateUser($idMember)
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
 
         $data = array();
         $data['nameMember'] = validateData($_POST['name']);
@@ -291,7 +298,7 @@ class User
      */
     public function deleteUser($idMember)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $db->write("DELETE FROM member WHERE idMember = $idMember");
         header("Location: " . ROOT . "login");
     }
@@ -303,7 +310,7 @@ class User
      */
     public function getAllUsers()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member ORDER BY isAdmin DESC";
         $data = $db->read($query);
         return $data;
@@ -316,7 +323,8 @@ class User
      */
     public function getAllCustomers()
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE isAdmin = 0";
         $data = $db->read($query);
         return $data;
@@ -329,7 +337,8 @@ class User
      */
     public function getAllAdmins()
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE isAdmin = 1";
         $data = $db->read($query);
         return $data;

@@ -10,7 +10,7 @@ class Category
      */
     public function create($data)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $arr['nameCategory'] = $data->data;
 
         if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['nameCategory']))) {
@@ -36,7 +36,7 @@ class Category
      */
     public function delete($idCategory)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
 
         if (isset($idCategory)) {
             $check = $db->write("DELETE FROM category WHERE idCategory = $idCategory");
@@ -59,7 +59,7 @@ class Category
      */
     public function updateCategory($idCategory, $nameCategory)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
 
         if (isset($idCategory) && isset($nameCategory)) {
             $query = "UPDATE  category SET nameCategory = :nameCategory WHERE idCategory = :idCategory";
@@ -84,7 +84,7 @@ class Category
      */
     public function getAll()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $data = $db->read("SELECT * FROM category ORDER BY idCategory DESC");
         return $data;
     }

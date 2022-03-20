@@ -1,54 +1,78 @@
 <?php
-
+ 
 class Database
 {
-    public static $con;
-
-    /**
-     * __construct
-     * connexion to the BDD
-     * @return void
-     */
-    public function __construct()
+  /**
+   * Instance de la classe PDO
+   *
+   * @var PDO
+   * @access private
+   */ 
+  private $PDOInstance = null;
+ 
+   /**
+   * Instance de la classe SPDO
+   *
+   * @var SPDO
+   * @access private
+   * @static
+   */ 
+  private static $instance = null;
+ 
+  
+  /**
+   * Constructeur
+   *
+   * @param void
+   * @return void
+   * @see PDO::__construct()
+   * @access private
+   */
+  private function __construct()
+  {
+    $string = DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
+    $this->PDOInstance  = new PDO($string, DB_USER, DB_PASS);
+  }
+ 
+   /**
+    * Crée et retourne l'objet SPDO
+    *
+    * @access public
+    * @static
+    * @param void
+    * @return SPDO $instance
+    */
+  public static function getInstance()
+  {  
+    if(is_null(self::$instance))
     {
-        try {
-            $string = DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
-            self::$con = new PDO($string, DB_USER, DB_PASS);
-            self::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::$con->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        } catch (PDOException $e) {
-            die($e->getMessage());
-        }
+      self::$instance = new Database();
     }
+    return self::$instance;
+  }
+ 
+  /**
+   * Exécute une requête SQL avec PDO
+   *
+   * @param string $query La requête SQL
+   * @return PDOStatement Retourne l'objet PDOStatement
+   */
+  public function query($query)
+  {
+    return $this->PDOInstance->query($query);
+  }
 
-    public static function getInstance()
-    {
-        if (is_null(self::$con)) {
-            $a  = new self();
-        }
-
-        return self::$con;
-    }
-
-    /**
-     * newInstance
-     * new Instance of the bdd
-     * @return object
-     */
-    public static function newInstance()
-    {
-        return $instance = new self();
-    }
-
-    /**
+   /**
      * read
      * read on the BDD
      * @return array
      */
     public function read($query, $data = array())
     {
-        $statement = self::$con->prepare($query);
+        $statement = $this->PDOInstance->prepare($query);
         $result = $statement->execute($data);
+
+       
 
         if ($result) {
             $data = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -66,7 +90,7 @@ class Database
      */
     public function write($query, $data = array())
     {
-        $statement = self::$con->prepare($query);
+        $statement = $this->PDOInstance->prepare($query);
         $result = $statement->execute($data);
 
         if ($result) {
@@ -77,6 +101,6 @@ class Database
 
     public function getLastInsertId()
     {
-        return self::$con->lastInsertId();
+        return $this->PDOInstance->lastInsertId();
     }
 }
