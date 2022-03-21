@@ -46,12 +46,12 @@
                         ?>
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
-
-    <button id="click"></button>
+    <?php
+    echo $noCat;
+    ?>
 </div>
 <script>
     /**

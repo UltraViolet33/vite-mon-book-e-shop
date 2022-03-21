@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Commands - Admin</h1>
+            <h1 class="text-center">Commandes - Admin</h1>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -25,5 +25,8 @@
             </table>
         </div>
     </div>
+    <?php
+                    echo $noCom;
+                    ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>

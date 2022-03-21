@@ -2,12 +2,12 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Products - Admin</h1>
+            <h1 class="text-center">Livres - Admin</h1>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-6">
-            <button class="btn btn-primary"><a href="<?= ROOT ?>admin/products/add">Ajouter Produit</a> </button>
+            <button class="btn btn-primary"><a href="<?= ROOT ?>admin/products/add">Ajouter un livre</a> </button>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -27,12 +27,16 @@
                     </tr>
                 </thead>
                 <tbody id="tableProducts">
-                    <?php
+                <?php
                     echo $tableHTML;
                     ?>
                 </tbody>
+                
             </table>
         </div>
     </div>
+    <?php
+                    echo $noProd;
+                    ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>

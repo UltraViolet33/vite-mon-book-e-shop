@@ -2,18 +2,18 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Add Products - Admin</h1>
+            <h1 class="text-center">Add un livre - Admin</h1>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-8">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nom Produit : </label>
+                    <label for="name" class="form-label">Titre livre : </label>
                     <input type="text" value="<?= isset($_POST['name']) ? $_POST['name'] : " "; ?>" name='name' class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="category" class="form-label">Catégorie Produit : </label>
+                    <label for="category" class="form-label">Catégorie Livre : </label>
                     <select name="category" class="form-select">
                         <option selected>Choississez une catégorie</option>
                         <?php if (isset($selectHTML)) {
@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="price" class="form-label">Prix Produit : </label>
+                    <label for="price" class="form-label">Prix Livre : </label>
                     <input type="number" value="<?= isset($_POST['price']) ? $_POST['price'] : " "; ?>" name='price' class="form-control">
                 </div>
                 <div class="mb-3">

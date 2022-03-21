@@ -73,6 +73,15 @@ class Profil extends Controller
         $command = $this->loadModel('CommandModel');
         $allCommandsUser = $command->getAllCommandsUser($userData->idMember);
         $commandsHTML =  $command->makeTableUser($allCommandsUser);
+
+        $noCommand = "";
+
+        if (strlen($commandsHTML == "")) {
+
+            $noCommand =  "<p class='text-center'>Vous n'avez aucune commande</p>";
+        }
+
+        $data['noCommand'] = $noCommand;
         $data['commands'] = $commandsHTML;
         $this->view('commands', $data);
     }

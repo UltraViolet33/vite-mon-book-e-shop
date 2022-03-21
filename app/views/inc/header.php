@@ -27,7 +27,7 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= ROOT ?>products">Produits</a>
+                                    <a class="nav-link" href="<?= ROOT ?>products">Les livres</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= ROOT ?>cart">Panier</a>
@@ -37,14 +37,14 @@
                                         <a href="<?= ROOT ?>profil" class="nav-link"><?= $data['userData']->pseudoMember ?></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>logout">Logout</a>
+                                        <a class="nav-link" href="<?= ROOT ?>logout">Se déconnecter</a>
                                     </li>
                                 <?php else :; ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>login">Login</a>
+                                        <a class="nav-link" href="<?= ROOT ?>login">Se connecter</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>signUp">SignUp</a>
+                                        <a class="nav-link" href="<?= ROOT ?>signUp">S'inscrire</a>
                                     </li>
                                 <?php endif; ?>
                             </ul>
@@ -58,23 +58,23 @@
                 <div class="col-12">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                         <div class="container-fluid">
-                            <a class="navbar-brand" href="admin">Admin Part</a>
+                            <a class="navbar-brand" href="admin">Partie Admin</a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/categories">View Categories</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/categories">Voir les Categories</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/products">View Products</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/products">Voir les livres</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/commands">View Commands</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/commands">Voir les commandes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/users">View Users</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/users">Voir les utilisateurs</a>
                                     </li>
                                 </ul>
                             </div>

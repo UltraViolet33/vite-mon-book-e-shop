@@ -14,7 +14,7 @@
             <p>Email :<span class="bold"> <?= $data['userData']->emailMember ?></span></p>
         </div>
         <div class="offset-2 col-4 infos">
-            <h3>Informations générales</h3>
+            <h3>Autres informations</h3>
             <p>Ville : <span class="bold"> <?= $data['userData']->cityMember ?></span></p>
             <p>Code Postal : <span class="bold"> <?= $data['userData']->postalCodeMember ?></span></p>
             <p>Adresse :<span class="bold"> <?= $data['userData']->adressMember ?> </span></p>

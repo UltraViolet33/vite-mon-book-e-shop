@@ -38,7 +38,13 @@ class Admin extends Controller
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
         $tableHTML = $category->makeTable($allCategories);
+        $noCat = "";
 
+        if (strlen($tableHTML == "")) {
+            $noCat =  "<p class='text-center'>Vous n'avez aucune categories. Vous devez en ajouter au moins une pour créer un livre!</p>";
+        }
+
+        $data['noCat'] = $noCat;
         $data['tableHTML'] = $tableHTML;
         $data['pageTitle'] = "Admin - Categories";
         $this->view("admin/categories", $data);
@@ -68,6 +74,13 @@ class Admin extends Controller
             // get all the products and the HTML table
             $allProducts = $product->getAllProducts();
             $tableHTML = $product->makeTable($allProducts);
+            $noProd = "";
+
+            if (strlen($tableHTML == "")) {
+                $noProd =  "<p class='text-center'>Vous n'avez aucun livres</p>";
+            }
+
+            $data['noProd'] = $noProd;
             $data['tableHTML'] = $tableHTML;
             $data['pageTitle'] = "Admin - Products";
             $this->view("admin/products", $data);
@@ -86,6 +99,13 @@ class Admin extends Controller
         $commandModel = $this->loadModel("CommandModel");
         $allCommands = $commandModel->getAllCommands();
         $commandsHTML = $commandModel->makeTable($allCommands);
+        $noCom = "";
+
+        if (strlen($commandsHTML == "")) {
+            $noCom =  "<p class='text-center'>Vous n'avez aucune commande en cours</p>";
+        }
+
+        $data['noCom'] = $noCom;
         $data['commandsHTML'] = $commandsHTML;
         $this->view("admin/commands", $data);
     }
@@ -107,6 +127,11 @@ class Admin extends Controller
         $category = $this->loadModel('Category');
         $allCategories = $category->getAll();
         $selectHTML = $productModel->makeSelectCategories($allCategories);
+
+        if($selectHTML == "")
+        {
+            header("Location: " . ROOT . "admin/categories");
+        }
 
         $data['selectHTML'] = $selectHTML;
         $data['categories'] = $allCategories;
@@ -183,12 +208,14 @@ class Admin extends Controller
         } elseif ($method === "home") {
             $allUsers = $user->getAllUsers();
             $usersHTML = $user->makeTableUsers($allUsers);
+            $noCus = "";
+            $data['noCus'] = $noCus;
             $data['users'] = $usersHTML;
             $data['pageTitle'] = "Admin - Users";
             $this->view("admin/users", $data);
         }
     }
-    
+
     /**
      * viewAdmins
      * display all admins users
@@ -202,9 +229,13 @@ class Admin extends Controller
         $adminsHTML = $user->makeTableUsers($allAdmins);
         $data['users'] = $adminsHTML;
         $data['pageTitle'] = "Admin - Views Admins";
+        $noCus = "";
+
+
+        $data['noCus'] = $noCus;
         $this->view("admin/users", $data);
     }
-    
+
     /**
      * viewCustomers
      * display all customers users
@@ -216,6 +247,14 @@ class Admin extends Controller
     {
         $allCustomers = $user->getAllCustomers();
         $customersHTML = $user->makeTableUsers($allCustomers);
+
+        $noCus = "";
+
+        if (strlen($customersHTML == "")) {
+            $noCus =  "<p class='text-center'>Vous n'avez aucune commande en cours</p>";
+        }
+
+        $data['noCus'] = $noCus;
         $data['users'] = $customersHTML;
         $data['pageTitle'] = "Admin - Views Customers";
         $this->view("admin/users", $data);
