@@ -2,32 +2,10 @@
 
 class Database
 {
-  /**
-   * Instance de la classe PDO
-   *
-   * @var PDO
-   * @access private
-   */
   private $PDOInstance = null;
 
-  /**
-   * Instance de la classe SPDO
-   *
-   * @var SPDO
-   * @access private
-   * @static
-   */
   private static $instance = null;
 
-
-  /**
-   * Constructeur
-   *
-   * @param void
-   * @return void
-   * @see PDO::__construct()
-   * @access private
-   */
   private function __construct()
   {
     $string = DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
@@ -36,10 +14,6 @@ class Database
 
   /**
    * Crée et retourne l'objet SPDO
-   *
-   * @access public
-   * @static
-   * @param void
    * @return SPDO $instance
    */
   public static function getInstance()
@@ -48,17 +22,6 @@ class Database
       self::$instance = new Database();
     }
     return self::$instance;
-  }
-
-  /**
-   * Exécute une requête SQL avec PDO
-   *
-   * @param string $query La requête SQL
-   * @return PDOStatement Retourne l'objet PDOStatement
-   */
-  public function query($query)
-  {
-    return $this->PDOInstance->query($query);
   }
 
   /**
@@ -96,6 +59,11 @@ class Database
     return false;
   }
 
+  /**
+   * getLastInsertId
+   * return the last id inserted
+   * @return void
+   */
   public function getLastInsertId()
   {
     return $this->PDOInstance->lastInsertId();

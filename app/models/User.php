@@ -14,8 +14,6 @@ class User
         // $db = Database::newInstance();
         $db = Database::getInstance();
 
-
-
         $data = array();
         $data['nameMember'] = validateData($_POST['name']);
         $data['firstnameMember'] = validateData($_POST['firstname']);
@@ -113,10 +111,8 @@ class User
         }
 
         if ($this->error == "") {
-            //confirm
             $data['passwordMember'] = hash('sha1', $data['passwordMember']);
 
-            //check if email exists with the password
             $sql = "SELECT * FROM member WHERE emailMember = :emailMember && passwordMember = :passwordMember limit 1";
             $result = $db->read($sql, $data);
 
@@ -137,7 +133,6 @@ class User
      */
     public function checkLogin($allowed = array())
     {
-        // $db = Database::newInstance();
         $db = Database::getInstance();
 
         if (count($allowed) > 0) {
@@ -162,7 +157,6 @@ class User
             }
         } else {
             if (isset($_SESSION['idMember'])) {
-                $arr = false;
                 $arr['idMember'] = $_SESSION['idMember'];
                 $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
                 $result = $db->read($query, $arr);
@@ -195,7 +189,6 @@ class User
      */
     private function checkEmail($data)
     {
-        // $db = Database::newInstance();
         $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE emailMember = :emailMember limit 1";
         $arr['emailMember'] = $data['emailMember'];
@@ -210,7 +203,6 @@ class User
      */
     private function checkPseudo($data)
     {
-        // $db = Database::newInstance();
         $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE pseudoMember = :pseudoMember limit 1";
         $arr['pseudoMember'] = $data['pseudoMember'];
@@ -225,7 +217,6 @@ class User
      */
     public function updateUser($idMember)
     {
-        // $db = Database::newInstance();
         $db = Database::getInstance();
 
         $data = array();
@@ -323,7 +314,6 @@ class User
      */
     public function getAllCustomers()
     {
-        // $db = Database::newInstance();
         $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE isAdmin = 0";
         $data = $db->read($query);
@@ -337,7 +327,6 @@ class User
      */
     public function getAllAdmins()
     {
-        // $db = Database::newInstance();
         $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE isAdmin = 1";
         $data = $db->read($query);

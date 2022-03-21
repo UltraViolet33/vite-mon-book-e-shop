@@ -50,9 +50,7 @@ class Product
         }
 
         if ($this->error == "") {
-            $imageBDD = "";
             $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
-            $imageBDD = ASSETS . "img/products/" . $nameImage;
             $data['imageProduct'] = $nameImage;
 
             $directory = $_SERVER['DOCUMENT_ROOT'] . ROOT_PATH . "public/assets/img/products/" . $nameImage;
@@ -249,9 +247,7 @@ class Product
         }
 
         if ($this->error == "") {
-            $imageBDD = "";
             $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
-            $imageBDD = ASSETS . "img/products/" . $nameImage;
             $data['imageProduct'] = $nameImage;
             $data['idProduct'] =  (int)$idProduct;
 

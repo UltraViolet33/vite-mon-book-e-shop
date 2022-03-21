@@ -11,10 +11,7 @@
             <p><span class="bold">Nom Produit</span> : <?= $product->nameProduct ?></p>
             <p><span class="bold">Catégorie Produit</span> : <?= $product->nameCategory ?></p>
             <p><span class="bold">Prix Produit : </span><?= $product->priceProduct ?> €</p>
-            <p><span class="bold">Description Produit : </span>
-
-                <?= $product->descriptionProduct ?></p>
-
+            <p><span class="bold">Description Produit : </span><?= $product->descriptionProduct ?></p>
         </div>
         <div class="col-12 col-lg-4">
             <img style="height:130px" src="<?= ASSETS ?>img/products/<?= $product->imageProduct ?>">

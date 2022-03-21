@@ -17,11 +17,10 @@ class CommandModel
 
         $arr['idUserCommand'] = $_SESSION['idMember'];
         $arr['amountCommand'] = $montant;
-       // $arr['stateCommand'] = "En cours de traitement";
 
         $query = "INSERT INTO command (idUserCommand, amountCommand, dateCommand) 
              VALUES (:idUserCommand, :amountCommand, NOW())";
-        $check = $db->write($query, $arr);
+        $db->write($query, $arr);
 
         $idCommand =  $db->getLastInsertId();
         $this->createDetailsCommand($idCommand);
@@ -46,7 +45,7 @@ class CommandModel
             $query = "INSERT INTO detailsCommand (idCommandDetailsCommand, idProductDetailsCommand, quantityDetailsCommand, priceDetailsCommand)
             VALUES (:idCommandDetailsCommand, :idProductDetailsCommand, :quantityDetailsCommand, :priceDetailsCommand)";
 
-            $check = $db->write($query, $arr);
+            $db->write($query, $arr);
         }
     }
 

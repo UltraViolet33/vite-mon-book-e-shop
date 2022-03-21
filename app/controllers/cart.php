@@ -19,7 +19,6 @@ class Cart extends Controller
         }
 
         $html = '<tr><td colspan="4" class="text-center">Vous n\'avez aucun produit dans votre panier</td></tr>';
-
         $buttonValidate = null;
         $button = '<button class="btn btn-primary"><a href="' . ROOT . 'products">Voir les produits</a></button>';
 

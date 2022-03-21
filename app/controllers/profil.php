@@ -73,7 +73,6 @@ class Profil extends Controller
         $command = $this->loadModel('CommandModel');
         $allCommandsUser = $command->getAllCommandsUser($userData->idMember);
         $commandsHTML =  $command->makeTableUser($allCommandsUser);
-
         $noCommand = "";
 
         if (strlen($commandsHTML == "")) {

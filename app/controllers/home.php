@@ -27,7 +27,6 @@ class Home extends Controller
             $data['htmlProducts'] = "Il n'y a aucun livre pour l'instant dans notre site. Revenez plus tard ! ";
         }
 
-     
         $data['pageTitle'] = "Home";
         $this->view("home", $data);
     }

@@ -87,6 +87,11 @@ class Admin extends Controller
         }
     }
 
+    /**
+     * commands
+     * display the users commands
+     * @return view admin/commands
+     */
     public function commands()
     {
         $user = $this->loadModel('User');

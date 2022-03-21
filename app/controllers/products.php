@@ -21,12 +21,12 @@ class Products extends Controller
         $product = $this->loadModel('Product');
         $allProducts = $product->getAllProducts();
         $htmlProducts = $product->makeFrontProducts($allProducts);
-
         $data['htmlProducts'] = $htmlProducts;
 
         if (strlen($htmlProducts) == 0) {
             $data['htmlProducts'] = "Il n'y a aucun livre pour l'instant dans notre site. Revenez plus tard ! ";
         }
+
         $data['pageTitle'] = "Produits";
         $this->view("products", $data);
     }

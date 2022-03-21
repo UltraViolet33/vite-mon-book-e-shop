@@ -20,7 +20,6 @@
                         <th scope="col">Description</th>
                         <th scope="col">Prix(€)</th>
                         <th scope="col">Stock</th>
-                     
                         <th scope="col">Categorie</th>
                         <th scope="col">Modifier</th>
                         <th scope="col">Supprimer</th>
