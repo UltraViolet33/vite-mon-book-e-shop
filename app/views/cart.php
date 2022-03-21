@@ -8,6 +8,7 @@
     <?php
     if (isset($_SESSION['idCommand'])) {
         echo "Votre numéro de command : " . $_SESSION['idCommand'];
+        unset($_SESSION['idCommand']);
     }
     ?>
     <table class="table">
@@ -16,7 +17,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Nom du produit</th>
                 <th scope="col">Quantité</th>
-                <th scope="col">prix</th>
+                <th scope="col">Prix(€)</th>
             </tr>
         </thead>
         <tbody>

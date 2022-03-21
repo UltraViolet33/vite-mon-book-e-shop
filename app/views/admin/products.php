@@ -11,16 +11,16 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-10">
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Prix</th>
+                        <th scope="col">Prix(€)</th>
                         <th scope="col">Stock</th>
-                        <th scope="col">Image</th>
+                     
                         <th scope="col">Categorie</th>
                         <th scope="col">Modifier</th>
                         <th scope="col">Supprimer</th>

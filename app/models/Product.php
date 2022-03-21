@@ -113,7 +113,7 @@ class Product
     {
         $arr['idProduct'] = $idProduct;
         $db = Database::getInstance();
-        $query = "SELECT * FROM product WHERE idProduct = :idProduct";
+        $query = "SELECT * FROM product  INNER JOIN category ON product.idCategoryProduct = category.idCategory WHERE idProduct = :idProduct";
         $data = $db->read($query, $arr);
         return $data;
     }
@@ -148,10 +148,10 @@ class Product
                             <th scope="row">' . $product->idProduct . '</th>
                             <td>' . $product->nameProduct . '</td>
                             <td>' . $product->descriptionProduct . '</td>
-                            <td>' . $product->priceProduct . '</td>
+                            <td>' . $product->priceProduct . ' </td>
                             <td>' . $product->stockProduct . '</td>
                           
-                            <td><img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" ></td>
+                            
                             <td>' . $product->nameCategory . '</td>
                             <td><button class="btn btn-primary"><a href=products/update/' . $product->idProduct . '>Modifier</a></button></td>
                             <td><button class="btn btn-warning"><a href=deleteProduct/' . $product->idProduct . '>Supprimer</a></button></td>
@@ -175,7 +175,8 @@ class Product
             foreach ($products as $product) {
                 $html .= '<div class="col-12 col-sm-6 col-lg-4 my-3">
                             <div class="card">
-                                <img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" >
+                                <img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '"  style="height:200px; width:100%;object-fit: cover;">
+                               
                                 <div class="card-body">
                                     <h5 class="card-title">' . $product->nameProduct . '</h5>
                                     <p class="card-text"' . $product->descriptionProduct . '</p>

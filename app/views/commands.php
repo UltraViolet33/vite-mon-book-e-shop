@@ -11,7 +11,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Date de la commande</th>
-                        <th scope="col">Montant de la command</th>
+                        <th scope="col">Montant de la commande(€)</th>
                         <th scope="col">Etat de la commande</th>
                     </tr>
                 </thead>

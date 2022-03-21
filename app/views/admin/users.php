@@ -6,14 +6,14 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-5">
+        <div class="col-lg-6 col-12">
             <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/">Voir les utilisateurs</a></button>
-            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/viewAdmins">Voir les admin</a></button>
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/viewAdmins">Voir les admins</a></button>
             <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/users/viewCustomers">Voir les clients</a></button>
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-lg-8 col-12">
             <table class="table">
                 <thead>
                     <tr>

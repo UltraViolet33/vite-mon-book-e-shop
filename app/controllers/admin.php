@@ -41,7 +41,7 @@ class Admin extends Controller
         $noCat = "";
 
         if (strlen($tableHTML == "")) {
-            $noCat =  "<p class='text-center'>Vous n'avez aucune categories. Vous devez en ajouter au moins une pour créer un livre!</p>";
+            $noCat =  "<p class='text-center'>Vous n'avez aucune categorie. Vous devez en ajouter au moins une pour créer un livre !</p>";
         }
 
         $data['noCat'] = $noCat;
@@ -77,7 +77,7 @@ class Admin extends Controller
             $noProd = "";
 
             if (strlen($tableHTML == "")) {
-                $noProd =  "<p class='text-center'>Vous n'avez aucun livres</p>";
+                $noProd =  "<p class='text-center'>Vous n'avez aucun livre. Vous devez avoir au moins une catégorie pour créer un livre !</p>";
             }
 
             $data['noProd'] = $noProd;
@@ -102,11 +102,12 @@ class Admin extends Controller
         $noCom = "";
 
         if (strlen($commandsHTML == "")) {
-            $noCom =  "<p class='text-center'>Vous n'avez aucune commande en cours</p>";
+            $noCom =  "<p class='text-center'>Aucun client n'a passé de commande !</p>";
         }
 
         $data['noCom'] = $noCom;
         $data['commandsHTML'] = $commandsHTML;
+        $data['pageTitle'] = "Admin - Commandes";
         $this->view("admin/commands", $data);
     }
 
@@ -201,7 +202,6 @@ class Admin extends Controller
 
         if ($method === "viewAdmins") {
             $this->viewAdmins($data, $user);
-            echo "admins";
         } elseif ($method === "viewCustomers") {
             $this->viewCustomers($data, $user);
         } elseif ($method === "home") {
@@ -249,7 +249,7 @@ class Admin extends Controller
         $noCus = "";
 
         if (strlen($customersHTML == "")) {
-            $noCus =  "<p class='text-center'>Vous n'avez aucune commande en cours</p>";
+            $noCus =  "<p class='text-center'>Vous n'avez aucun client inscrit dans votre site ! Il fallait penser au référencement ;)</p>";
         }
 
         $data['noCus'] = $noCus;

@@ -65,16 +65,16 @@
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/categories">Voir les Categories</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/categories">Categories</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/products">Voir les livres</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/products">Livres</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/commands">Voir les commandes</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/commands">Commandes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= ROOT ?>admin/users">Voir les utilisateurs</a>
+                                        <a class="nav-link" href="<?= ROOT ?>admin/users">Utilisateurs</a>
                                     </li>
                                 </ul>
                             </div>

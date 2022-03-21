@@ -20,8 +20,8 @@
             <p>Adresse :<span class="bold"> <?= $data['userData']->adressMember ?> </span></p>
         </div>
     </div>
-    <div class="row my-5">
-        <div class="offset-4">
+    <div class="row my-5 justify-content-center">
+        <div class="col-lg-5 col-9">
             <button class="btn btn-primary"><a href="<?= ROOT ?>profil/update">Modifier</a></button>
             <button class="btn btn-primary"><a href="<?= ROOT ?>profil/commands">Voir mes commandes</a></button>
             <button class="btn btn-danger"><a href="<?= ROOT ?>profil/delete">Supprimer</a></button>

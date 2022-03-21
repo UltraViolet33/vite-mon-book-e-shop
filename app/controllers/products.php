@@ -25,7 +25,7 @@ class Products extends Controller
         $data['htmlProducts'] = $htmlProducts;
 
         if (strlen($htmlProducts) == 0) {
-            $data['htmlProducts'] = "Il n'y a aucun livres pour l'instant dans notre site. Revenez plus tard ! ";
+            $data['htmlProducts'] = "Il n'y a aucun livre pour l'instant dans notre site. Revenez plus tard ! ";
         }
         $data['pageTitle'] = "Produits";
         $this->view("products", $data);

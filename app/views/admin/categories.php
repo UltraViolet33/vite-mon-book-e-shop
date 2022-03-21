@@ -61,10 +61,8 @@
      * @return void
      */
     function sendDataAjax(data = {}) {
-        console.log('egklj');
         const ajax = new XMLHttpRequest();
         ajax.onload = function() {
-            //alert(ajax.responseText);
             handleResultAjax(ajax.responseText);
         };
 
@@ -81,7 +79,7 @@
     function handleResultAjax(result) {
         if (result != "") {
             let resultObj = JSON.parse(result);
-
+            console.log(resultObj);
             if (typeof resultObj.dataType != "undefined") {
                 if (resultObj.dataType == "addCategory") {
                     if (resultObj.messageType == "info") {
@@ -93,6 +91,8 @@
 
                     const tableCategories_tbody = document.querySelector('#tableCategories');
                     tableCategories_tbody.innerHTML = resultObj.data;
+                } else if (resultObj.dataType == "updateCategory") {
+                    displayEditForm();
                 }
                 const tableCategories_tbody = document.querySelector('#tableCategories');
                 tableCategories_tbody.innerHTML = resultObj.data;
@@ -100,6 +100,9 @@
         }
     }
 
+    /**
+     * delete a category
+     */
     function deleteCategory(idCategory) {
         data = idCategory;
         const objData = {
@@ -109,11 +112,17 @@
         sendDataAjax(objData);
     }
 
+    /**
+     * display the form to add a category
+     */
     function displayForm() {
         const formCat_div = document.querySelector(".formCat");
         formCat_div.classList.toggle("showFormCat");
     }
 
+    /**
+     * display the form to add a category
+     */
     function displayEditForm(idCategory = null, nameCategory = null) {
         const formCat_div = document.querySelector(".formEditCat");
         formCat_div.classList.toggle("show");
@@ -126,6 +135,9 @@
         }
     }
 
+    /**
+     * collect the new category name
+     */
     function collectDataEditCat() {
         const inputEditCat_input = document.getElementById('inputEditCat');
         const idCategory = inputEditCat_input.getAttribute("idCat");
@@ -136,9 +148,13 @@
             nameCategory: newNameCategory,
             dataType: "updateCategory",
         };
+        inputEditCat_input.value = "";
         sendDataAjax(objData);
     }
 
+    /**
+     * collect the category name
+     */
     function collectDataCat() {
         const categoryAdd_input = document.getElementById("inputAddCat");
 
@@ -149,13 +165,11 @@
             alert("Entrez un nom de categorie valide !");
         } else {
             const data = categoryAdd_input.value.trim();
-            console.log(data);
             const objData = {
                 data: data,
                 dataType: "addCategory",
             };
             categoryAdd_input.value = "";
-            console.table(objData);
             sendDataAjax(objData);
         }
     }

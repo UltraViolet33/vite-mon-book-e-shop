@@ -6,10 +6,10 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-6">
-            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/categories">View Categories</a></button>
-            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/products">View Products</a></button>
-            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/commands">View Commands</a></button>
+        <div class="col-4">
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/categories">Categories</a></button>
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/products">Livres</a></button>
+            <button class="btn btn-primary"> <a href="<?= ROOT ?>admin/commands">Commandes</a></button>
         </div>
     </div>
 </div>
