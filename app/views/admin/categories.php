@@ -7,7 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-8">
-            <button class="btn btn-primary" onclick="displayForm()">Ajouter Catégorie</button>
+            <button class="btn btn-primary" id="btnSubmit" onclick="displayForm()">Ajouter Catégorie</button>
         </div>
         <div class="col-8 formCat">
             <form action="" method="POST">
@@ -19,7 +19,16 @@
                 <button type="button" onclick="displayForm()" class="btn btn-warning">Fermer</button>
             </form>
         </div>
-
+        <div class="col-8 formEditCat hide">
+            <form action="" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nouveau nom de la catégorie : </label>
+                    <input id="inputEditCat" type="text" name='name' class="form-control">
+                </div>
+                <button type="button" id="btnEditCat" onclick="collectDataEditCat()" class="btn btn-primary">Valider</button>
+                <button type="button" onclick="displayEditForm()" class="btn btn-warning">Fermer</button>
+            </form>
+        </div>
         <div class="row justify-content-center">
             <div class="col-8">
                 <table class="table">
@@ -37,10 +46,12 @@
                         ?>
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
+    <?php
+    echo $noCat;
+    ?>
 </div>
 <script>
     /**
@@ -52,20 +63,12 @@
     function sendDataAjax(data = {}) {
         const ajax = new XMLHttpRequest();
         ajax.onload = function() {
-            //alert(ajax.responseText);
             handleResultAjax(ajax.responseText);
         };
-
-        // ajax.addEventListener('readystatechange', function() {
-        //     if (ajax.readyState == 4 && ajax.status == 200) {
-        //         alert(ajax.responseText);
-        //     }
-        // });
 
         ajax.open("POST", "<?= ROOT ?>categoryAjax", true);
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.send(JSON.stringify(data));
-
     }
 
     /**
@@ -74,10 +77,9 @@
      * @return void
      */
     function handleResultAjax(result) {
-        console.log('azeghk')
         if (result != "") {
             let resultObj = JSON.parse(result);
-
+            console.log(resultObj);
             if (typeof resultObj.dataType != "undefined") {
                 if (resultObj.dataType == "addCategory") {
                     if (resultObj.messageType == "info") {
@@ -85,8 +87,90 @@
                         const tableCategories_tbody = document.querySelector('#tableCategories');
                         tableCategories_tbody.innerHTML = resultObj.data;
                     }
+                } else if (resultObj.dataType == "deleteCategory") {
+
+                    const tableCategories_tbody = document.querySelector('#tableCategories');
+                    tableCategories_tbody.innerHTML = resultObj.data;
+                } else if (resultObj.dataType == "updateCategory") {
+                    displayEditForm();
                 }
+                const tableCategories_tbody = document.querySelector('#tableCategories');
+                tableCategories_tbody.innerHTML = resultObj.data;
             }
+        }
+    }
+
+    /**
+     * delete a category
+     */
+    function deleteCategory(idCategory) {
+        data = idCategory;
+        const objData = {
+            data: data,
+            dataType: "deleteCategory",
+        };
+        sendDataAjax(objData);
+    }
+
+    /**
+     * display the form to add a category
+     */
+    function displayForm() {
+        const formCat_div = document.querySelector(".formCat");
+        formCat_div.classList.toggle("showFormCat");
+    }
+
+    /**
+     * display the form to add a category
+     */
+    function displayEditForm(idCategory = null, nameCategory = null) {
+        const formCat_div = document.querySelector(".formEditCat");
+        formCat_div.classList.toggle("show");
+
+        if (idCategory !== null && nameCategory !== null) {
+            const inputEditCat_input = document.getElementById('inputEditCat');
+            inputEditCat_input.value = nameCategory;
+            inputEditCat_input.setAttribute('idCat', idCategory);
+            const btnSubmit = document.getElementById('btnEditCat');
+        }
+    }
+
+    /**
+     * collect the new category name
+     */
+    function collectDataEditCat() {
+        const inputEditCat_input = document.getElementById('inputEditCat');
+        const idCategory = inputEditCat_input.getAttribute("idCat");
+        const newNameCategory = inputEditCat_input.value;
+
+        const objData = {
+            idCategory: idCategory,
+            nameCategory: newNameCategory,
+            dataType: "updateCategory",
+        };
+        inputEditCat_input.value = "";
+        sendDataAjax(objData);
+    }
+
+    /**
+     * collect the category name
+     */
+    function collectDataCat() {
+        const categoryAdd_input = document.getElementById("inputAddCat");
+
+        if (
+            categoryAdd_input.value.trim() == "" ||
+            !isNaN(categoryAdd_input.value.trim())
+        ) {
+            alert("Entrez un nom de categorie valide !");
+        } else {
+            const data = categoryAdd_input.value.trim();
+            const objData = {
+                data: data,
+                dataType: "addCategory",
+            };
+            categoryAdd_input.value = "";
+            sendDataAjax(objData);
         }
     }
 </script>

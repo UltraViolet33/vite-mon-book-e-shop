@@ -2,7 +2,7 @@
 <div class="row justify-content-center">
     <div class="col-6 text-center">
         <h1>Vite mon Book !</h1>
-        <h2>Les produits</h2>
+        <h2>Les livres</h2>
     </div>
 </div>
 <div class="container">

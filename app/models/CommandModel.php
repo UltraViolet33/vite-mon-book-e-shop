@@ -1,49 +1,40 @@
 <?php
 
-
 class CommandModel
 {
+    /**
+     * create
+     * insert one command in the BDD
+     */
     public function create()
     {
-        $db = Database::newInstance();
-
-        show($_SESSION['cart']);
-
+        $db = Database::getInstance();
         $montant = 0;
 
         for ($i = 0; $i < count($_SESSION['cart']['price']); $i++) {
             $montant += $_SESSION['cart']['price'][$i] * $_SESSION['cart']['quantity'][$i];
         }
-        echo $montant;
-
 
         $arr['idUserCommand'] = $_SESSION['idMember'];
         $arr['amountCommand'] = $montant;
-        $arr['stateCommand'] = "En cours de traitement";
 
-
-        $query = "INSERT INTO command (idUserCommand, amountCommand, dateCommand, stateCommand) 
-             VALUES (:idUserCommand, :amountCommand, NOW(), :stateCommand)";
-        $check = $db->write($query, $arr);
-
-        show($check);
+        $query = "INSERT INTO command (idUserCommand, amountCommand, dateCommand) 
+             VALUES (:idUserCommand, :amountCommand, NOW())";
+        $db->write($query, $arr);
 
         $idCommand =  $db->getLastInsertId();
         $this->createDetailsCommand($idCommand);
-
         return $idCommand;
-
-        //  for($i = 0; $i < count($_SESSION['panier']['id_produit']); $i++)
-        // {
-        //     executeRequete("INSERT INTO details_commande (id_commande, id_produit, quantite, prix) VALUES ($id_commande, " . $_SESSION['panier']['id_produit'][$i] . "," . $_SESSION['panier']['quantite'][$i] . "," . $_SESSION['panier']['prix'][$i] . ")");
-        // }
-        // return $check;
     }
 
-
+    /**
+     * createDetailsCommand
+     * insert the details of one command in the BDD
+     * @param  int $idCommand
+     */
     public function createDetailsCommand($idCommand)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
 
         for ($i = 0; $i < count($_SESSION['cart']['idProduct']); $i++) {
             $arr['idCommandDetailsCommand'] = $idCommand;
@@ -51,13 +42,80 @@ class CommandModel
             $arr['quantityDetailsCommand'] = $_SESSION['cart']['quantity'][$i];
             $arr['priceDetailsCommand'] = $_SESSION['cart']['price'][$i];
 
-
             $query = "INSERT INTO detailsCommand (idCommandDetailsCommand, idProductDetailsCommand, quantityDetailsCommand, priceDetailsCommand)
             VALUES (:idCommandDetailsCommand, :idProductDetailsCommand, :quantityDetailsCommand, :priceDetailsCommand)";
 
-            $check = $db->write($query, $arr);
-
-            show($check);
+            $db->write($query, $arr);
         }
+    }
+
+    /**
+     * getAllCommands
+     * select all commands in the BDD
+     * @return array
+     */
+    public function getAllCommands()
+    {
+        $db = Database::getInstance();
+        $result = $db->read("SELECT * FROM command ORDER BY idCommand DESC");
+        return $result;
+    }
+
+    /**
+     * getAllCommandsUser
+     * select all commands in the BDD for a user
+     * @return array
+     */
+    public function getAllCommandsUser($idMember)
+    {
+        $db = Database::getInstance();
+        $result = $db->read("SELECT * FROM command WHERE idUserCommand = $idMember");
+        return $result;
+    }
+
+    /**
+     * makeTable
+     * make HTML table to display commands
+     * @param  array $commands
+     * @return HTML elements
+     */
+    public function makeTable($commands)
+    {
+        $tableHTML = "";
+        if (is_array($commands)) {
+            foreach ($commands as $command) {
+                $date = date("d/m/Y H:i:s", strtotime($command->dateCommand));
+                $tableHTML .= '<tr>
+                            <th scope="row">' . $command->idCommand . '</th>
+                            <td>' . $command->idUserCommand . '</td>
+                            <td>' . $command->amountCommand . '</td>
+                            <td>' . $date . '</td>
+                            <td>' . $command->stateCommand . '</td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
+    }
+
+    /**
+     * makeTable
+     * make HTML table to display commands
+     * @param  array $commands
+     * @return HTML elements
+     */
+    public function makeTableUser($commands)
+    {
+        $tableHTML = "";
+        if (is_array($commands)) {
+            foreach ($commands as $command) {
+                $date = date("d/m/Y H:i:s", strtotime($command->dateCommand));
+                $tableHTML .= '<tr>
+                <td>' . $date . '</td>
+                            <td>' . $command->amountCommand . '</td>
+                            <td>' . $command->stateCommand . '</td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
     }
 }

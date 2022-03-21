@@ -1,19 +1,19 @@
 <?php $this->view("inc/header", $data); ?>
-<div class="container my-3">
+<div class="container">
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Add un livre - Admin</h1>
+            <h1 class="text-center">Update Products - Admin</h1>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-8">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Titre livre : </label>
-                    <input type="text" value="<?= isset($_POST['name']) ? $_POST['name'] : " "; ?>" name='name' class="form-control">
+                    <label for="name" class="form-label">Nom Produit : </label>
+                    <input type="text" value="<?= isset($product) ? $product->nameProduct : " "; ?>" name='name' class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="category" class="form-label">Catégorie Livre : </label>
+                    <label for="category" class="form-label">Catégorie Produit : </label>
                     <select name="category" class="form-select">
                         <option selected>Choississez une catégorie</option>
                         <?php if (isset($selectHTML)) {
@@ -23,12 +23,12 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="price" class="form-label">Prix Livre : </label>
-                    <input type="number" value="<?= isset($_POST['price']) ? $_POST['price'] : " "; ?>" name='price' class="form-control">
+                    <label for="price" class="form-label">Prix Produit : </label>
+                    <input type="number" value="<?= isset($product) ? $product->priceProduct : " "; ?>" name='price' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock actuel : </label>
-                    <input type="number" value="<?= isset($_POST['stock']) ? $_POST['stock'] : " "; ?>" name='stock' class="form-control">
+                    <input type="number" value="<?= isset($product) ? $product->stockProduct : " "; ?>" name='stock' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description : </label>

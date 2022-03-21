@@ -2,7 +2,7 @@
 
 require_once('../app/core/controller.php');
 
-class Command extends Controller
+class Page404 extends Controller
 {
     /**
      * index
@@ -18,10 +18,7 @@ class Command extends Controller
             $data['userData'] = $userData;
         }
 
-        $command = $this->loadModel('CommandModel');
-        $idCommand = $command->create();
-        unset($_SESSION['cart']);
-        $_SESSION['idCommand'] = $idCommand;
-        header("location:" . ROOT . "cart");
+        $data['css'] = "css/404.css";
+        $this->view("404", $data);
     }
 }

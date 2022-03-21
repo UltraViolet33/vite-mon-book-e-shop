@@ -7,16 +7,13 @@
 </div>
 <div class="container">
     <div class="row justify-content-evenly">
-        <div class="col-4">
-            <p>Nom Produit : <?= $product->nameProduct ?></p>
-            <p>Catégorie Produit : Categorie</p>
-            <p>Prix Produit : <?= $product->priceProduct ?></p>
-            <p>Description Produit : </p>
-            <div>
-                <p><?= $product->descriptionProduct ?></p>
-            </div>
+        <div class="col-12 col-lg-4">
+            <p><span class="bold">Nom Produit</span> : <?= $product->nameProduct ?></p>
+            <p><span class="bold">Catégorie Produit</span> : <?= $product->nameCategory ?></p>
+            <p><span class="bold">Prix Produit : </span><?= $product->priceProduct ?> €</p>
+            <p><span class="bold">Description Produit : </span><?= $product->descriptionProduct ?></p>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
             <img style="height:130px" src="<?= ASSETS ?>img/products/<?= $product->imageProduct ?>">
         </div>
     </div>

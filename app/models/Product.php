@@ -11,7 +11,7 @@ class Product
      */
     public function create()
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $data = array();
 
         $data['nameProduct'] = validateData($_POST['name']);
@@ -50,16 +50,11 @@ class Product
         }
 
         if ($this->error == "") {
-
-            $imageBDD = "";
             $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
-            $imageBDD = ASSETS . "img/products/" . $nameImage;
-
             $data['imageProduct'] = $nameImage;
 
             $directory = $_SERVER['DOCUMENT_ROOT'] . ROOT_PATH . "public/assets/img/products/" . $nameImage;
             copy($_FILES['image']['tmp_name'], $directory);
-
             $query = "INSERT INTO product (nameProduct, descriptionProduct, imageProduct, priceProduct, stockProduct, idCategoryProduct) 
             VALUES (:nameProduct, :descriptionProduct, :imageProduct, :priceProduct, :stockProduct, :idCategoryProduct)";
 
@@ -100,8 +95,9 @@ class Product
      */
     public function getAllProducts()
     {
-        $db = Database::newInstance();
-        $data = $db->read("SELECT * FROM product ORDER BY idProduct ASC");
+        $db = Database::getInstance();
+        $query = "SELECT * FROM product INNER JOIN category ON product.idCategoryProduct = category.idCategory";
+        $data = $db->read($query);
         return $data;
     }
 
@@ -114,8 +110,8 @@ class Product
     public function getOneProduct($idProduct)
     {
         $arr['idProduct'] = $idProduct;
-        $db = Database::newInstance();
-        $query = "SELECT * FROM product WHERE idProduct = :idProduct";
+        $db = Database::getInstance();
+        $query = "SELECT * FROM product  INNER JOIN category ON product.idCategoryProduct = category.idCategory WHERE idProduct = :idProduct";
         $data = $db->read($query, $arr);
         return $data;
     }
@@ -150,19 +146,18 @@ class Product
                             <th scope="row">' . $product->idProduct . '</th>
                             <td>' . $product->nameProduct . '</td>
                             <td>' . $product->descriptionProduct . '</td>
-                            <td>' . $product->priceProduct . '</td>
+                            <td>' . $product->priceProduct . ' </td>
                             <td>' . $product->stockProduct . '</td>
                           
-                            <td><img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" ></td>
-                            <td>' . $product->idCategoryProduct . '</td>
-                            <td><button class="btn btn-primary">Modifier</button></td>
-                            <td><button class="btn btn-warning">Supprimer</button></td>
+                            
+                            <td>' . $product->nameCategory . '</td>
+                            <td><button class="btn btn-primary"><a href=products/update/' . $product->idProduct . '>Modifier</a></button></td>
+                            <td><button class="btn btn-warning"><a href=deleteProduct/' . $product->idProduct . '>Supprimer</a></button></td>
                         </tr>';
             }
         }
         return $tableHTML;
     }
-
 
     /**
      * makeFrontProducts
@@ -178,7 +173,8 @@ class Product
             foreach ($products as $product) {
                 $html .= '<div class="col-12 col-sm-6 col-lg-4 my-3">
                             <div class="card">
-                                <img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '" >
+                                <img width=90% src="' . ASSETS . 'img/products/' . $product->imageProduct . '"  style="height:200px; width:100%;object-fit: cover;">
+                               
                                 <div class="card-body">
                                     <h5 class="card-title">' . $product->nameProduct . '</h5>
                                     <p class="card-text"' . $product->descriptionProduct . '</p>
@@ -189,5 +185,82 @@ class Product
             }
         }
         return $html;
+    }
+
+    /**
+     * deleteProduct
+     * delete one product in the BDD
+     * @param  int $idProduct
+     * @return void
+     */
+    public function deleteProduct($idProduct)
+    {
+        $db = Database::getInstance();
+        $db->write("DELETE FROM product WHERE idProduct = $idProduct");
+        header("Location: " . ROOT . "admin/products");
+    }
+
+    /**
+     * updateProduct
+     * update one product in the BDD
+     * @param  int $idProduct
+     * @return void
+     */
+    public function updateProduct($idProduct)
+    {
+        $db = Database::getInstance();
+        $data = array();
+
+        $data['nameProduct'] = validateData($_POST['name']);
+        $data['descriptionProduct'] = validateData($_POST['description']);
+        $data['priceProduct'] = validateData($_POST['price']);
+        $data['priceProduct'] = (int)$data['priceProduct'];
+        $data['stockProduct'] = validateData($_POST['stock']);
+        $data['stockProduct'] = (int)$data['stockProduct'];
+        $data['idCategoryProduct'] = validateData($_POST['category']);
+        $data['idCategoryProduct'] = (int)$data['idCategoryProduct'];
+
+        $data['imageProduct'] = $_FILES['image']['name'];
+
+        if (empty($data['nameProduct'])) {
+            $this->error .= "Veuillez entrez un nom de produit valide. <br>";
+        }
+
+        if (empty($data['descriptionProduct'])) {
+            $this->error .= "Veuillez entrez une description de produit. <br>";
+        }
+
+        if (empty($data['priceProduct'])) {
+            $this->error .= "Veuillez entrez un prix de produit valide. <br>";
+        }
+
+        if (empty($data['stockProduct'])) {
+            $this->error .= "Veuillez entrez un stock de produit valide. <br>";
+        }
+
+        if (empty($data['idCategoryProduct'])) {
+            $this->error .= "Veuillez entrez une catégorie de produit. <br>";
+        }
+
+        if (empty($data['imageProduct'])) {
+            $this->error .= "Veuillez choisir une image de produit. <br>";
+        }
+
+        if ($this->error == "") {
+            $nameImage = $this->getRandomString(5) . '_' . $data['imageProduct'];
+            $data['imageProduct'] = $nameImage;
+            $data['idProduct'] =  (int)$idProduct;
+
+            $directory = $_SERVER['DOCUMENT_ROOT'] . ROOT_PATH . "public/assets/img/products/" . $nameImage;
+            copy($_FILES['image']['tmp_name'], $directory);
+
+            $query = "UPDATE product SET nameProduct = :nameProduct, descriptionProduct = :descriptionProduct, imageProduct = :imageProduct, stockProduct = :stockProduct, priceProduct = :priceProduct, idCategoryProduct = :idCategoryProduct WHERE idProduct = :idProduct";
+            $result = $db->write($query, $data);
+            if ($result) {
+                header("Location: " . ROOT . "admin/products");
+                die;
+            }
+        }
+        $_SESSION['error'] = $this->error;
     }
 }

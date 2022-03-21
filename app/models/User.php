@@ -11,7 +11,8 @@ class User
      */
     public function signUp()
     {
-        $db = Database::newInstance();
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
 
         $data = array();
         $data['nameMember'] = validateData($_POST['name']);
@@ -95,8 +96,8 @@ class User
      */
     public function login()
     {
-        $db = Database::newInstance();
-
+        // $db = Database::newInstance();
+        $db = Database::getInstance();
         $data = array();
         $data['emailMember'] = validateData($_POST['email']);
         $data['passwordMember'] = validateData($_POST['password']);
@@ -110,10 +111,8 @@ class User
         }
 
         if ($this->error == "") {
-            //confirm
             $data['passwordMember'] = hash('sha1', $data['passwordMember']);
 
-            //check if email exists with the password
             $sql = "SELECT * FROM member WHERE emailMember = :emailMember && passwordMember = :passwordMember limit 1";
             $result = $db->read($sql, $data);
 
@@ -134,7 +133,7 @@ class User
      */
     public function checkLogin($allowed = array())
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
 
         if (count($allowed) > 0) {
             $arr['idMember'] = $_SESSION['idMember'];
@@ -146,12 +145,9 @@ class User
 
                 if ($result->isAdmin && $allowed[0] === 'admin') {
                     return $result;
-                } 
-                elseif($allowed[1] === "customer")
-                {
+                } elseif ($allowed[1] === "customer") {
                     return $result;
-                }
-                else {
+                } else {
                     header("Location: " . "login");
                     die;
                 }
@@ -161,7 +157,6 @@ class User
             }
         } else {
             if (isset($_SESSION['idMember'])) {
-                $arr = false;
                 $arr['idMember'] = $_SESSION['idMember'];
                 $query = "SELECT * FROM member  WHERE idMember = :idMember limit 1";
                 $result = $db->read($query, $arr);
@@ -194,7 +189,7 @@ class User
      */
     private function checkEmail($data)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE emailMember = :emailMember limit 1";
         $arr['emailMember'] = $data['emailMember'];
         return $db->read($query, $arr);
@@ -208,9 +203,161 @@ class User
      */
     private function checkPseudo($data)
     {
-        $db = Database::newInstance();
+        $db = Database::getInstance();
         $query = "SELECT * FROM member WHERE pseudoMember = :pseudoMember limit 1";
         $arr['pseudoMember'] = $data['pseudoMember'];
         return $db->read($query, $arr);
+    }
+
+    /**
+     * updateUser
+     * update the user data in the BDD
+     * @param  int $idMember
+     * @return void
+     */
+    public function updateUser($idMember)
+    {
+        $db = Database::getInstance();
+
+        $data = array();
+        $data['nameMember'] = validateData($_POST['name']);
+        $data['firstnameMember'] = validateData($_POST['firstname']);
+        $data['pseudoMember'] = validateData($_POST['pseudo']);
+        $data['emailMember'] = validateData($_POST['email']);
+        $data['cityMember'] = validateData($_POST['city']);
+        $data['postalCodeMember'] = validateData($_POST['postalCode']);
+        $data['adressMember'] = validateData($_POST['adress']);
+        $data['passwordMember'] = $_POST['password'];
+        $data['idMember'] = $idMember;
+        $password2 = $_POST['password2'];
+
+        // check the datas 
+        if (empty($data['nameMember']) || !preg_match("/^[a-zA-Z-' ]*$/", $data['nameMember'])) {
+            $this->error .= "Veuillez entrez un nom valide. <br>";
+        }
+
+        if (empty($data['firstnameMember']) || !preg_match("/^[a-zA-Z-' ]*$/", $data['nameMember'])) {
+            $this->error .= "Veuillez entrez un prénom valide. <br>";
+        }
+
+        if (empty($data['pseudoMember'])) {
+            $this->error .= "Veuillez entrez un pseudo valide. <br>";
+        }
+
+        if (empty($data['emailMember']) || (!filter_var($data['emailMember'], FILTER_VALIDATE_EMAIL))) {
+            $this->error .= "Veuillez entrez un email valide. <br>";
+        }
+
+        if (empty($data['postalCodeMember']) || !preg_match("/^[0-9]{5}$/", $data['postalCodeMember'])) {
+            $this->error .= "Veuillez entrez un code postal valide. <br>";
+        }
+
+        if (empty($data['cityMember'])) {
+            $this->error .= "Veuillez entrez une ville valide. <br>";
+        }
+
+        if (empty($data['adressMember'])) {
+            $this->error .= "Veuillez entrez une adresse valide. <br>";
+        }
+
+        if ($data['passwordMember'] !== $password2) {
+            $this->error .= "Les mots de passes ne correspondent pas. <br>";
+        }
+
+        if (strlen($data['passwordMember']) < 4) {
+            $this->error .= "Le mot de passe doit être long de 4 caractères au minimun. <br>";
+        }
+
+        if ($this->error == "") {
+            $data['passwordMember'] = hash('sha1', $data['passwordMember']);
+
+            $query = "UPDATE member SET pseudoMember = :pseudoMember, nameMember = :nameMember, firstnameMember = :firstnameMember, emailMember = :emailMember, postalCodeMember = :postalCodeMember, cityMember = :cityMember, adressMember = :adressMember, passwordMember = :passwordMember WHERE idMember = :idMember";
+            $result = $db->write($query, $data);
+            if ($result) {
+                header("Location: " . ROOT . "profil");
+                die;
+            }
+        }
+        $_SESSION['error'] = $this->error;
+    }
+
+    /**
+     * deleteUser
+     * delete one user in the BDD
+     * @param  int $idMember
+     * @return void
+     */
+    public function deleteUser($idMember)
+    {
+        $db = Database::getInstance();
+        $db->write("DELETE FROM member WHERE idMember = $idMember");
+        header("Location: " . ROOT . "login");
+    }
+
+    /**
+     * getAllUsers
+     * select all the users in the BDD
+     * @return array
+     */
+    public function getAllUsers()
+    {
+        $db = Database::getInstance();
+        $query = "SELECT * FROM member ORDER BY isAdmin DESC";
+        $data = $db->read($query);
+        return $data;
+    }
+
+    /**
+     * getAllCustomers
+     * select all the customers in the BDD
+     * @return array
+     */
+    public function getAllCustomers()
+    {
+        $db = Database::getInstance();
+        $query = "SELECT * FROM member WHERE isAdmin = 0";
+        $data = $db->read($query);
+        return $data;
+    }
+
+    /**
+     * getAllAdmins
+     * select all the admins in the BDD
+     * @return array
+     */
+    public function getAllAdmins()
+    {
+        $db = Database::getInstance();
+        $query = "SELECT * FROM member WHERE isAdmin = 1";
+        $data = $db->read($query);
+        return $data;
+    }
+
+    /**
+     * makeTableUsers
+     * make HTML table to display all the users in the admin part
+     * @param  arrays $members
+     * @return HTML 
+     */
+    public function makeTableUsers($members)
+    {
+        $tableHTML = "";
+        if (is_array($members)) {
+            foreach ($members as $member) {
+                $statut =  $member->isAdmin ? "Admin" : "Customer";
+                $tableHTML .= '<tr>
+                            <th scope="row">' . $member->idMember . '</th>
+                            <td>' . $statut . '</td>
+                            <td>' . $member->pseudoMember . '</td>
+                            <td>' . $member->nameMember . '</td>
+                            <td>' . $member->firstnameMember . '</td>
+                            <td>' . $member->emailMember . '</td>
+                            <td>' . $member->cityMember . '</td>
+                            <td>' . $member->postalCodeMember . '</td>
+                            <td>' . $member->adressMember . '</td>
+                        </tr>';
+            }
+        }
+        return $tableHTML;
     }
 }
