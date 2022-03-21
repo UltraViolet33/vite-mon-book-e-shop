@@ -12,9 +12,12 @@ include "../app/init.php";
 //$path = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 
 $path = str_replace("index.php", "", $path);
+show($_SERVER['HTTP_HOST']);
 
 define("ROOT", $path);
 define("ASSETS", $path . "assets/");
 define("ROOT_PATH", "/Vite-mon-Book-E-Shop/");
 
 $app = new App();
+
+http://localhost:81/Vite-mon-Book-E-Shop/public/
