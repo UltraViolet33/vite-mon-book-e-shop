@@ -27,16 +27,15 @@
                     </tr>
                 </thead>
                 <tbody id="tableProducts">
-                <?php
+                    <?php
                     echo $tableHTML;
                     ?>
                 </tbody>
-                
             </table>
         </div>
     </div>
     <?php
-                    echo $noProd;
-                    ?>
+    echo $noProd;
+    ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>

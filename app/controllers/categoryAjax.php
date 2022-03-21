@@ -21,7 +21,6 @@ class CategoryAjax extends Controller
         $data = file_get_contents("php://input");
         $data = json_decode($data);
 
-
         if (is_object($data) && isset($data->dataType)) {
 
             if ($data->dataType == "addCategory") {

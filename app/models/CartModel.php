@@ -1,7 +1,7 @@
 <?php
 
 class CartModel
-{    
+{
     /**
      * addToCart
      * add one product to the cart
@@ -10,8 +10,7 @@ class CartModel
      */
     public function addToCart($product)
     {
-        if(!isset($_SESSION['cart']))
-        {
+        if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array();
             $_SESSION['cart']['name'] = array();
             $_SESSION['cart']['idProduct'] = array();
@@ -24,7 +23,7 @@ class CartModel
         $_SESSION['cart']['quantity'][] = 1;
         $_SESSION['cart']['price'][] = $product->priceProduct;
     }
-    
+
     /**
      * deleteCart
      * delete the cart
@@ -34,7 +33,7 @@ class CartModel
     {
         unset($_SESSION['cart']);
     }
-    
+
     /**
      * makeHTMLCart
      * make HTML table for the cart
@@ -44,15 +43,13 @@ class CartModel
     public function makeHTMLCart($cart)
     {
         $html = "";
-        if(is_array($cart))
-        {
-            for($i=0; $i<count($cart['idProduct']); $i++)
-            { 
+        if (is_array($cart)) {
+            for ($i = 0; $i < count($cart['idProduct']); $i++) {
                 $html .= '<tr>
                             <th scope="row">1</th>
-                            <td>'.$cart['name'][$i].'</td>
-                            <td>'.$cart['quantity'][$i].'</td>
-                            <td>'.$cart['price'][$i].'</td>
+                            <td>' . $cart['name'][$i] . '</td>
+                            <td>' . $cart['quantity'][$i] . '</td>
+                            <td>' . $cart['price'][$i] . '</td>
                             </th>';
             }
         }

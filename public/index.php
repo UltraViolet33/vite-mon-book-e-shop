@@ -15,7 +15,6 @@ $path = str_replace("index.php", "", $path);
 
 define("ROOT", $path);
 define("ASSETS", $path . "assets/");
-
 define("ROOT_PATH", "/Vite-mon-Book-E-Shop/");
 
 $app = new App();

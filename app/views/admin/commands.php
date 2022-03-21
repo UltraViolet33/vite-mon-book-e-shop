@@ -26,7 +26,7 @@
         </div>
     </div>
     <?php
-                    echo $noCom;
-                    ?>
+    echo $noCom;
+    ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>

@@ -14,7 +14,7 @@ class User
         // $db = Database::newInstance();
         $db = Database::getInstance();
 
-        
+
 
         $data = array();
         $data['nameMember'] = validateData($_POST['name']);
@@ -302,7 +302,7 @@ class User
         $db->write("DELETE FROM member WHERE idMember = $idMember");
         header("Location: " . ROOT . "login");
     }
-    
+
     /**
      * getAllUsers
      * select all the users in the BDD
@@ -315,7 +315,7 @@ class User
         $data = $db->read($query);
         return $data;
     }
-    
+
     /**
      * getAllCustomers
      * select all the customers in the BDD
@@ -343,7 +343,7 @@ class User
         $data = $db->read($query);
         return $data;
     }
-    
+
     /**
      * makeTableUsers
      * make HTML table to display all the users in the admin part

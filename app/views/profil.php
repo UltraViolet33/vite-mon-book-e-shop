@@ -22,7 +22,7 @@
     </div>
     <div class="row my-5">
         <div class="offset-4">
-            <button  class="btn btn-primary"><a href="<?= ROOT ?>profil/update">Modifier</a></button>
+            <button class="btn btn-primary"><a href="<?= ROOT ?>profil/update">Modifier</a></button>
             <button class="btn btn-primary"><a href="<?= ROOT ?>profil/commands">Voir mes commandes</a></button>
             <button class="btn btn-danger"><a href="<?= ROOT ?>profil/delete">Supprimer</a></button>
         </div>

@@ -128,8 +128,7 @@ class Admin extends Controller
         $allCategories = $category->getAll();
         $selectHTML = $productModel->makeSelectCategories($allCategories);
 
-        if($selectHTML == "")
-        {
+        if ($selectHTML == "") {
             header("Location: " . ROOT . "admin/categories");
         }
 
@@ -230,7 +229,6 @@ class Admin extends Controller
         $data['users'] = $adminsHTML;
         $data['pageTitle'] = "Admin - Views Admins";
         $noCus = "";
-
 
         $data['noCus'] = $noCus;
         $this->view("admin/users", $data);

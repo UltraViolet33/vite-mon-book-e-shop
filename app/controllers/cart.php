@@ -20,8 +20,8 @@ class Cart extends Controller
 
         $html = '<tr><td colspan="4" class="text-center">Vous n\'avez aucun produit dans votre panier</td></tr>';
 
-       $buttonValidate = null;
-       $button = '<button class="btn btn-primary"><a href="' . ROOT . 'products">Voir les produits</a></button>';
+        $buttonValidate = null;
+        $button = '<button class="btn btn-primary"><a href="' . ROOT . 'products">Voir les produits</a></button>';
 
         if (isset($_SESSION['cart'])) {
             $cart = $this->loadModel('CartModel');
@@ -36,7 +36,7 @@ class Cart extends Controller
         $data['pageTitle'] = "Panier";
         $this->view('cart', $data);
     }
-    
+
     /**
      * addCart
      * add a product to the cart
@@ -58,7 +58,7 @@ class Cart extends Controller
         $cart->addToCart($product[0]);
         header("location:" . ROOT . "cart");
     }
-    
+
     /**
      * deleteCart
      * delete the cart

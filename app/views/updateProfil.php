@@ -50,4 +50,4 @@
         </div>
     </div>
 </div>
-<?php $this->view("inc/footer", $data); ?>  
+<?php $this->view("inc/footer", $data); ?>

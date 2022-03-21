@@ -37,7 +37,7 @@
         </div>
     </div>
     <?php
-                    echo $noCus;
-                    ?>
+    echo $noCus;
+    ?>
 </div>
 <?php $this->view("inc/footer", $data); ?>
