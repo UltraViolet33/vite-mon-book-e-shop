@@ -54,4 +54,4 @@ This is an e-commerce website practice
  ### More to come...
  - Update your cart
  - Update commands state for admin
- - and more ..
+ - and more .
